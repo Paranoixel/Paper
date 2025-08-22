@@ -87,6 +87,25 @@ handleClick($('#import'), () => {
   parseData(codeBox.textContent.trim())
 })
 
+handleClick($('#paste'), async () => {
+  try {
+    const t = await navigator.clipboard.readText()
+    codeBox.textContent = t?.trim()
+  } catch (err) {
+    alert('paste failed:' + err)
+  }
+})
+
+handleClick($('#copy'), async () => {
+  const t = codeBox.textContent.trim()
+  try {
+    await navigator.clipboard.writeText(t)
+    alert('copied')
+  } catch (err) {
+    alert('copy failed:' + err)
+  }
+})
+
 function renderConf(type) {
   const inputs = renderInputs($data, type)
   showModal()

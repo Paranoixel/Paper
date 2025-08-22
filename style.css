@@ -334,9 +334,9 @@ body {
   flex: auto;
   text-wrap: nowrap;
   user-select: none;
-  padding: 8px 14px;
+  padding: 10px;
   background-color: #000;
-  border-radius: 12px;
+  border-radius: 10px;
 
   &.actived {
     color: #0095ff;
@@ -404,6 +404,28 @@ body {
 
 }
 
+.board {
+  position: relative;
+}
+
+.float {
+  display: flex;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  user-select: none;
+  gap: 10px;
+}
+
+.btn-s {
+  background: #fff;
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
 #codeBox {
+  display: block;
+  min-height: 200px;
   white-space: break-spaces;
 }
