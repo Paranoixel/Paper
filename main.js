@@ -87,6 +87,10 @@ handleClick($('#import'), () => {
   parseData(codeBox.textContent.trim())
 })
 
+handleClick($('#clear'), () => {
+  codeBox.textContent = ''
+})
+
 handleClick($('#paste'), async () => {
   try {
     const t = await navigator.clipboard.readText()

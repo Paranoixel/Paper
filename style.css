@@ -336,7 +336,7 @@ body {
   user-select: none;
   padding: 10px;
   background-color: #000;
-  border-radius: 10px;
+  border-radius: 12px;
 
   &.actived {
     color: #0095ff;
@@ -411,21 +411,21 @@ body {
 .float {
   display: flex;
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 8px;
+  right: 8px;
   user-select: none;
-  gap: 10px;
+  gap: 8px;
 }
 
 .btn-s {
   background: #fff;
   color: #000;
   padding: 4px 8px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 #codeBox {
   display: block;
-  min-height: 200px;
+  min-height: 100px;
   white-space: break-spaces;
 }
