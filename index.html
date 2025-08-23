@@ -4,17 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Paper 1.2.6</title>
+  <title>Paper 1.2.7</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./main.js" defer></script>
 </head>
 
 <body>
   <div class="main">
-    <div id="modal" class="off">
-      <span id="cls">×</span>
+    <dialog id="modal">
       <div id="tab"></div>
-    </div>
+      <div id="cls" class="x">×</div>
+    </dialog>
     <div id="box" class="br">
       <div id="mock" class="a hide"></div>
       <div id="container" class="a">
@@ -29,7 +29,7 @@
         <div id="sc" class="a shortcuts"></div>
         <div class="a shortcuts other"></div>
       </div>
-      <div id="preview" class='a off'>
+      <div id="preview" class='a hide'>
         <div class="a psb">
           <div>Essential</div>
           <div>O O EED</div>
@@ -43,8 +43,8 @@
       </div>
     </div>
   </div>
-  <div id="nav">
-    <div class="actions">
+  <div class="nav">
+    <div class="actions cover">
       <div id="list" class="g">
         <div id="_hm" class="btn c">Hole Mask</div>
         <div id="_sb" class="btn c">Statusbar</div>
@@ -59,9 +59,9 @@
         <div id="switchPreview" class="btn c">Preview</div>
         <div id="fullscreen" class="btn c">Fullscreen</div>
         <div id="brightUp" class="btn c actived">Lighter</div>
-        <div id="switchMask" class="btn c actived">Container</div>
+        <div id="switchCont" class="btn c actived">Container</div>
         <div id="full" class="btn c actived">Fullview</div>
-        <div id="edit" class="btn c actived">Edit</div>
+        <div id="edit" class="btn c">Edit</div>
         <div id="lock" class="btn c actived">Lock</div>
         <div id="restore" class="btn c disabled">Restore</div>
         <label class="upload c btn" for="mockup">
@@ -80,12 +80,12 @@
         <div id="import" class="btn c">Import</div>
         <div id="export" class="btn c">Export</div>
       </div>
-      <div id="saves" class="off"></div>
-      <div class="board">
-        <div class="float">
-          <div id="clear" class="btn-s">Clear</div>
-          <div id="paste" class="btn-s">Paste</div>
-          <div id="copy" class="btn-s">Copy</div>
+      <div id="saves"></div>
+      <div class="board cover">
+        <div class="toolbar a">
+          <div id="clear" class="btn _s">Clear</div>
+          <div id="paste" class="btn _s">Paste</div>
+          <div id="copy" class="btn _s">Copy</div>
         </div>
         <code id="codeBox" class="btn" contenteditable spellcheck="false"></code>
       </div>

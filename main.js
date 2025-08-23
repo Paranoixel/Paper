@@ -1,4 +1,4 @@
-let locked = true
+let locked = true, selected = ''
 
 const $data = getProps()
 const $config = { ...$data }
@@ -11,6 +11,10 @@ const list = $('#list')
 const MockBtn = $('#switchMock')
 const codeBox = $('#codeBox')
 const saves = $('#saves')
+const m = $('#modal')
+m.auto = function () {
+  m[m.open ? 'close' : 'show']()
+}
 initSaves()
 
 handleClick(list, ({ target }) => {
@@ -20,15 +24,16 @@ handleClick(list, ({ target }) => {
   }
 })
 
-handleClick($('#cls'), showModal)
+handleClick($('#cls'), switchModal)
 
-function showModal(y = false) {
-  $('#modal').classList.toggle('off', y)
+function switchModal(mode = 'auto') {
+  const s = mode === 'auto' ? 'auto' : mode ? 'close' : 'show'
+  m[s]()
 }
 
 handleClick(prevBtn, () => {
   $('.main').classList.toggle('prev')
-  preview.classList.toggle('off')
+  preview.classList.toggle('hide')
 }, 1)
 
 handleClick($('#lock'), () => {
@@ -37,13 +42,12 @@ handleClick($('#lock'), () => {
   $('#restore').classList.toggle('disabled')
 }, 1)
 
-handleClick($('#switchMask'), () => {
+handleClick($('#switchCont'), () => {
   $('#container').classList.toggle('hide')
-  $('#edit').classList.toggle('off')
 }, 1)
 
 handleClick($('#edit'), () => {
-  list.classList.toggle('off')
+  $('.actions').classList.toggle('cover')
 }, 1)
 
 handleClick(MockBtn, () => {
@@ -82,7 +86,7 @@ handleClick($('#save'), () => {
 })
 
 handleClick($('#load'), () => {
-  saves.classList.toggle('off')
+  $('.board').classList.toggle('cover')
 }, 1)
 
 handleClick($('#export'), () => {
@@ -128,10 +132,14 @@ function diffData() {
 }
 
 function renderConf(type) {
-  const inputs = renderInputs($config, type)
-  showModal()
-  $('#tab').innerHTML = ''
-  $('#tab').appendChild(inputs)
+  const changed = type !== selected
+  if (changed) {
+    const inputs = renderInputs($config, type)
+    $('#tab').innerHTML = ''
+    $('#tab').appendChild(inputs)
+    selected = type
+  }
+  switchModal(changed ? 0 : 'auto')
 }
 
 function importData(data) {
@@ -166,7 +174,7 @@ function parseData(s) {
   try {
     const data = JSON.parse(s)
     importData(data)
-    showModal(true)
+    switchModal(1)
   } catch (err) {
     alert(`err: ${err}`)
   }
@@ -272,7 +280,7 @@ function renderRecord(key) {
   const div = document.createElement('div')
   div.className = 'record'
   const ts = new Date(+key.replace('w_', '')).toLocaleString()
-  div.innerHTML = `<div id="${key}">${ts}</div><div id="del_${key}">×</div>`
+  div.innerHTML = `<div id="${key}">${ts}</div><div id="del_${key}" class="x">×</div>`
   return div
 }
 
@@ -300,7 +308,7 @@ function renderInputs(data, type) {
       function renderBtn(type) {
         const btn = document.createElement('div')
         btn.textContent = type
-        btn.className = 'btn c'
+        btn.className = 'btn _s c'
         btn.onclick = () => {
           const cur = data[key]
           let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(cur)
