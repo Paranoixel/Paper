@@ -53,6 +53,7 @@ body {
   --cd-radius: 24px;
   --cd-bg-color: #2d1887;
   --de-aspect-ratio: 84/187;
+  --de-width: 400px;
   --de-hole-size: 25.7px;
   --de-hole-top: 9.6px;
   --de-radius: 34px;
@@ -63,6 +64,8 @@ body {
   background: #E0E8FF;
   padding-bottom: 300px;
   font-size: 13px;
+  /* width: min(100%, var(--de-width)); */
+  margin: 0 auto;
 }
 
 .main {
@@ -332,10 +335,6 @@ body {
   align-items: center;
   flex-wrap: nowrap;
   overflow-x: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .upload {
@@ -393,7 +392,7 @@ body {
 
     input {
       width: 100px;
-      flex: 1;
+      flex: 6;
       text-align: center;
       height: 28px;
       background: #0000;
@@ -401,6 +400,7 @@ body {
     }
 
     .btn {
+      height: 100%;
       flex: 1;
     }
   }

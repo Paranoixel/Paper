@@ -277,16 +277,22 @@ function addTransformSupport() {
 }
 
 function _update(key, v) {
+  console.log(key, v)
   const _v = v?.trim()
-  box.style.setProperty(key, _v)
   $config[key] = _v
+  // if (_v === $data[key]) {
+  //   box.style.removeProperty(key)
+  //   return
+  // }
+  document.body.style.setProperty(key, _v)
 }
 
 function renderRecord(key) {
-  const div = document.createElement('div')
-  div.className = 'record'
   const ts = new Date(+key.replace('w_', '')).toLocaleString()
-  div.innerHTML = `<div id="${key}">${ts}</div><div id="del_${key}" class="x">×</div>`
+  const div = $ce('div', {
+    className: 'record',
+    innerHTML: `<div id="${key}">${ts}</div><div id="del_${key}" class="x">×</div>`
+  })
   return div
 }
 
@@ -294,36 +300,50 @@ function renderInputs(data, type) {
   const frag = document.createDocumentFragment()
   for (const key in data) {
     if (!key.startsWith(`--${type}`)) continue
-    const div = document.createElement('div')
-    div.className = 'items'
-    const span = document.createElement('span')
-    span.textContent = key.replace('--', '')
-    const input = document.createElement('input')
-    input.onblur = ({ target }) => {
-      _update(key, target.value)
-    }
-    input.value = data[key]
-    input.name = key
-    input.spellcheck = false
-    input.placeholder = $data[key]
+    const value = data[key]
+    const div = $ce('div', {
+      className: 'items'
+    })
+    const span = $ce('span', {
+      textContent: key.replace('--', '')
+    })
+    const input = $ce('input', {
+      onblur: ({ target }) => {
+        _update(key, target.value)
+      },
+      value,
+      name: key,
+      spellcheck: false,
+      placeholder: $data[key]
+    })
     div.appendChild(span)
-    const isNum = !key.includes('color') && !key.includes('ratio')
+    const isColor = key.includes('color')
+    const isNum = !isColor && !key.includes('ratio')
     div.appendChild(input)
+    if (isColor) {
+      const color = $ce('input', {
+        type: 'color',
+        value,
+        // className: 'btn',
+        // style: `--btn-bg: var(${key});`
+      })
+      div.appendChild(color)
+    }
     if (isNum) {
       const up = renderBtn('+')
       const down = renderBtn('-')
       function renderBtn(type) {
-        const btn = document.createElement('div')
-        btn.textContent = type
-        btn.className = 'btn _s c'
-        btn.onclick = () => {
-          const cur = data[key]
-          let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(cur)
-          num = +num + (type === '+' ? 1 : -1)
-          const n = `${num}${unit}`
-          input.value = n
-          _update(key, n)
-        }
+        const btn = $ce('div', {
+          textContent: type,
+          className: 'btn _s c',
+          onclick: () => {
+            let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(data[key])
+            num = +num + (type === '+' ? 1 : -1)
+            const n = `${num}${unit}`
+            input.value = n
+            _update(key, n)
+          }
+        })
         return btn
       }
       div.appendChild(up)
@@ -365,4 +385,14 @@ function handleClick(elm, handle, r) {
     handle(e)
     if (r) elm.classList.toggle('actived')
   })
+}
+
+function $ce(type, props = {}) {
+  const el = document.createElement(type)
+  if (Object.keys(props).length) {
+    for (const key in props) {
+      el[key] = props[key]
+    }
+  }
+  return el
 }
