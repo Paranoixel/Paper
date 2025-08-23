@@ -8,14 +8,9 @@ div {
   box-sizing: border-box;
 }
 
-:root {
-  --aspect-ratio: 84/187;
-  --hole-size: 25.7px;
-  --hole-top: 9.6px;
-  --device-radius: 34px;
-  --wallpaper-scale: 1.1;
-  --lockscreen-drim: 0.8
-}
+/* :root {
+
+} */
 
 body {
   --bd-z: 2;
@@ -60,6 +55,12 @@ body {
   --cd-blur: 0px;
   --cd-radius: 24px;
   --cd-bg-color: #2d1887;
+  --de-aspect-ratio: 84/187;
+  --de-hole-size: 25.7px;
+  --de-hole-top: 9.6px;
+  --de-radius: 34px;
+  --de-wallpaper-scale: 1.1;
+  --de-lockscreen-drim: 0.8;
   font-family: monospace;
   overscroll-behavior-y: contain;
   background: #E0E8FF;
@@ -68,7 +69,7 @@ body {
 }
 
 .main {
-  --scale: calc(1 / var(--wallpaper-scale));
+  --scale: calc(1 / var(--de-wallpaper-scale));
   position: relative;
   width: 100%;
   overflow: auto;
@@ -80,7 +81,7 @@ body {
 }
 
 .mini {
-  height: 600px;
+  height: 40vh;
 }
 
 .c {
@@ -91,7 +92,7 @@ body {
   position: relative;
   margin: 0 auto;
   width: 100%;
-  aspect-ratio: var(--aspect-ratio);
+  aspect-ratio: var(--de-aspect-ratio);
   user-select: none;
   background: var(--bd-bg-color, #000);
   transition: all ease-in-out .4s;
@@ -106,7 +107,7 @@ body {
 }
 
 .br {
-  filter: brightness(calc(1 / var(--lockscreen-drim)));
+  filter: brightness(calc(1 / var(--de-lockscreen-drim)));
 }
 
 .off {
@@ -128,8 +129,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  aspect-ratio: var(--aspect-ratio);
-  border-radius: var(--device-radius);
+  aspect-ratio: var(--de-aspect-ratio);
+  border-radius: var(--de-radius);
   transform: scale(var(--scale));
   transition: all ease-in-out .4s;
 }
@@ -148,7 +149,7 @@ body {
   --fp-bg-color: #fff;
   z-index: 99;
   font-family: system-ui;
-  backdrop-filter: brightness(var(--lockscreen-drim));
+  backdrop-filter: brightness(var(--de-lockscreen-drim));
 
   .ptime {
     --t-top: 0px;
@@ -173,9 +174,9 @@ body {
   }
 
   .hole {
-    top: var(--hole-top);
-    left: calc(50vw - var(--hole-size) / 2);
-    width: var(--hole-size);
+    top: var(--de-hole-top);
+    left: calc(50vw - var(--de-hole-size) / 2);
+    width: var(--de-hole-size);
     aspect-ratio: 1;
     background: #000;
     border-radius: 100%;
@@ -223,12 +224,12 @@ body {
   height: 100%;
   z-index: var(--bd-z);
   border: var(--bd-width) solid var(--bd-color);
-  border-radius: var(--device-radius);
+  border-radius: var(--de-radius);
 }
 
 #hm {
   z-index: calc(var(--sb-z) + 1);
-  top: calc(var(--hole-size) / 2 + var(--hole-top) - var(--hm-hight) / 2);
+  top: calc(var(--de-hole-size) / 2 + var(--de-hole-top) - var(--hm-hight) / 2);
   left: calc(50% - var(--hm-width) / 2);
   width: var(--hm-width);
   height: var(--hm-hight);

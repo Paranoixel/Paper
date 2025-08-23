@@ -1,6 +1,7 @@
-let $data, locked = true, showMask = true
+let locked = true
 
-$data = getProps()
+const $data = getProps()
+const $config = { ...$data }
 const box = $('#box')
 const bgImg = $('.img')
 const preview = $('#preview')
@@ -70,7 +71,12 @@ handleClick(fullBtn, () => {
 
 handleClick($('#save'), () => {
   const key = 'w_' + Date.now()
-  localStorage.setItem(key, JSON.stringify($data))
+  const diff = diffData()
+  if (!Object.keys(diff).length) {
+    alert('no change')
+    return
+  }
+  localStorage.setItem(key, JSON.stringify(diff))
   const r = renderRecord(key)
   saves.appendChild(r)
 })
@@ -80,7 +86,8 @@ handleClick($('#load'), () => {
 }, 1)
 
 handleClick($('#export'), () => {
-  codeBox.textContent = JSON.stringify($data, null, 2)
+  const diff = diffData()
+  codeBox.textContent = JSON.stringify(diff, null, 2)
 })
 
 handleClick($('#import'), () => {
@@ -110,18 +117,27 @@ handleClick($('#copy'), async () => {
   }
 })
 
+function diffData() {
+  const diff = {}
+  for (const key in $config) {
+    if ($config[key] !== '' && $config[key] !== $data[key]) {
+      diff[key] = $config[key]
+    }
+  }
+  return diff
+}
+
 function renderConf(type) {
-  const inputs = renderInputs($data, type)
+  const inputs = renderInputs($config, type)
   showModal()
   $('#tab').innerHTML = ''
   $('#tab').appendChild(inputs)
 }
 
 function importData(data) {
-  for (const key in $data) {
-    if (!data[key]) continue
-    $data[key] = data[key]
-    box.style.setProperty(key, data[key])
+  for (const key in data) {
+    if (!$config.hasOwnProperty(key)) continue
+    _update(key, data[key])
   }
 }
 
@@ -247,8 +263,9 @@ function addTransformSupport() {
 }
 
 function _update(key, v) {
-  box.style.setProperty(key, v)
-  $data[key] = v
+  const _v = v?.trim()
+  box.style.setProperty(key, _v)
+  $config[key] = _v
 }
 
 function renderRecord(key) {
@@ -269,12 +286,11 @@ function renderInputs(data, type) {
     span.textContent = key.replace('--', '')
     const input = document.createElement('input')
     input.addEventListener('blur', ({ target }) => {
-      const v = target.value.trim()
-      _update(key, v)
+      _update(key, target.value)
     })
     input.value = data[key]
     input.spellcheck = false
-    input.placeholder = data[key]
+    input.placeholder = $data[key]
     div.appendChild(span)
     const isNum = !key.includes('color') && !key.includes('ratio')
     div.appendChild(input)
@@ -315,7 +331,7 @@ function getProps() {
       if (rule.selectorText === 'body') {
         for (const name of rule.style) {
           if (name.startsWith('--')) {
-            props[name] = window.getComputedStyle(document.body).getPropertyValue(name).trim()
+            props[name] = window.getComputedStyle(document.body).getPropertyValue(name)
           }
         }
       }
