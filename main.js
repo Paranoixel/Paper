@@ -293,10 +293,11 @@ function renderInputs(data, type) {
     const span = document.createElement('span')
     span.textContent = key.replace('--', '')
     const input = document.createElement('input')
-    input.addEventListener('blur', ({ target }) => {
+    input.onblur = ({ target }) => {
       _update(key, target.value)
-    })
+    }
     input.value = data[key]
+    input.name = key
     input.spellcheck = false
     input.placeholder = $data[key]
     div.appendChild(span)

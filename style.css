@@ -15,7 +15,7 @@ body {
   --bd-color: #3748E7;
   --bd-bg-color: #000;
   --hm-width: 34px;
-  --hm-hight: 34px;
+  --hm-hight: 0px;
   --hm-radius: 50px;
   --hm-bg-color: #F287CF;
   --sb-z: 1;
@@ -25,7 +25,7 @@ body {
   --sb-offset-x: 0px;
   --sb-blur: 0px;
   --sb-radius: 0px;
-  --sb-bg-color: Rgb(0 0 0 / .3);
+  --sb-bg-color: radial-gradient(circle at 50% 50%, #000 0%, rgb(0 0 0 / 55%) 60%);
   --sc-opacity: 1;
   --sc-size: 64px;
   --sc-bottom: 186px;
@@ -305,15 +305,15 @@ body {
 
 .nav {
   overflow: hidden;
+  padding: 8px 16px;
 }
 
 .actions {
-  --cover-y: -151px;
+  --cover-y: -56px;
   --btn-bg: #000;
   --btn-color: #fff;
   display: flex;
   flex-direction: column;
-  padding: 16px;
   gap: 8px;
   transition: transform 0.3s;
 
@@ -325,11 +325,22 @@ body {
     padding-bottom: 8px;
     border-bottom: 1px dashed #000;
   }
+}
 
-  .upload {
-    input {
-      display: none;
-    }
+#list {
+  height: 48px;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.upload {
+  input {
+    display: none;
   }
 }
 
@@ -340,7 +351,6 @@ body {
   padding: 10px;
   background: var(--btn-bg);
   border-radius: 12px;
-  touch-action: none;
   color: var(--btn-color);
   transition: border-radius 0.3s;
 
@@ -356,18 +366,20 @@ body {
 #modal {
   position: fixed;
   z-index: 100;
-  bottom: 360px;
-  margin: 0 10px;
-  width: calc(100% - 20px);
+  bottom: 380px;
+  margin: 0 24px;
+  width: calc(100% - 48px);
   padding: 8px;
   border-radius: 8px;
   background: #fff8;
+  touch-action: none;
 }
 
 #tab {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-bottom: 18px;
 
   .items {
     display: flex;
@@ -380,11 +392,16 @@ body {
     }
 
     input {
+      width: 100px;
       flex: 1;
       text-align: center;
       height: 28px;
       background: #0000;
       border-radius: 8px;
+    }
+
+    .btn {
+      flex: 1;
     }
   }
 }
