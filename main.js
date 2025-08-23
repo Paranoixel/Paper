@@ -12,6 +12,12 @@ const MockBtn = $('#switchMock')
 const codeBox = $('#codeBox')
 const saves = $('#saves')
 const m = $('#modal')
+m._show = m.show
+m.show = function () {
+  this._show()
+  document.activeElement.blur()
+}
+
 m.auto = function () {
   m[m.open ? 'close' : 'show']()
 }
