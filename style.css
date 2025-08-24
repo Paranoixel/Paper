@@ -16,15 +16,15 @@ body {
   background: #E0E8FF;
   padding-bottom: 300px;
   font-size: 13px;
-  /* width: min(100%, var(--bi-width)); */
   margin: 0 auto;
 }
 
 .main {
   --scale: calc(1 / var(--bi-wallpaper-scale));
+  --aspect-ratio: var(--bi-SP-ar, 1);
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vw / (var(--aspect-ratio)));
   overflow: auto;
   transition: all ease-in-out .3s;
 
@@ -46,7 +46,7 @@ body {
   position: relative;
   margin: 0 auto;
   width: 100%;
-  aspect-ratio: var(--bi-SP-ar);
+  aspect-ratio: var(--aspect-ratio);
   user-select: none;
   background: var(--bd-bg-color, #000);
   transition: all ease-in-out .4s;
@@ -79,7 +79,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  aspect-ratio: var(--bi-SP-ar);
+  aspect-ratio: var(--aspect-ratio);
   border-radius: var(--bi-radius);
   transform: scale(var(--scale));
   transition: all ease-in-out .4s;
