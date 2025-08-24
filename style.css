@@ -16,15 +16,17 @@ body {
   background: #E0E8FF;
   padding-bottom: 300px;
   font-size: 13px;
-  /* width: min(100%, var(--de-width)); */
+  /* width: min(100%, var(--bi-width)); */
   margin: 0 auto;
 }
 
 .main {
-  --scale: calc(1 / var(--de-wallpaper-scale));
+  --scale: calc(1 / var(--bi-wallpaper-scale));
   position: relative;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: auto;
+  transition: all ease-in-out .3s;
 
   &.prev {
     overflow: hidden;
@@ -44,7 +46,7 @@ body {
   position: relative;
   margin: 0 auto;
   width: 100%;
-  aspect-ratio: var(--de-aspect-ratio);
+  aspect-ratio: var(--bi-SP-ar);
   user-select: none;
   background: var(--bd-bg-color, #000);
   transition: all ease-in-out .4s;
@@ -59,7 +61,7 @@ body {
 }
 
 .br {
-  filter: brightness(calc(1 / var(--de-lockscreen-drim)));
+  filter: brightness(calc(1 / var(--bi-lockscreen-drim)));
 }
 
 .disabled {
@@ -77,8 +79,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  aspect-ratio: var(--de-aspect-ratio);
-  border-radius: var(--de-radius);
+  aspect-ratio: var(--bi-SP-ar);
+  border-radius: var(--bi-radius);
   transform: scale(var(--scale));
   transition: all ease-in-out .4s;
 }
@@ -98,7 +100,7 @@ body {
   z-index: 99;
   color: #fff;
   pointer-events: none;
-  backdrop-filter: brightness(var(--de-lockscreen-drim));
+  backdrop-filter: brightness(var(--bi-lockscreen-drim));
 
   .ptime {
     --t-top: 0px;
@@ -123,9 +125,9 @@ body {
   }
 
   .hole {
-    top: var(--de-hole-top);
-    left: calc(50vw - var(--de-hole-size) / 2);
-    width: var(--de-hole-size);
+    top: var(--bi-hole-top);
+    left: calc(50vw - var(--bi-hole-size) / 2);
+    width: var(--bi-hole-size);
     aspect-ratio: 1;
     background: #000;
     border-radius: 100%;
@@ -173,12 +175,12 @@ body {
   height: 100%;
   z-index: var(--bd-z);
   border: var(--bd-width) solid var(--bd-color);
-  border-radius: var(--de-radius);
+  border-radius: var(--bi-radius);
 }
 
 #hm {
   z-index: calc(var(--sb-z) + 1);
-  top: calc(var(--de-hole-size) / 2 + var(--de-hole-top) - var(--hm-hight) / 2);
+  top: calc(var(--bi-hole-size) / 2 + var(--bi-hole-top) - var(--hm-hight) / 2);
   left: calc(50% - var(--hm-width) / 2);
   width: var(--hm-width);
   height: var(--hm-hight);
@@ -420,7 +422,7 @@ body {
   text-align: center;
   margin: 0 var(--offset);
   padding: 16px 24px;
-  border-radius: max(4px, calc(var(--de-radius) - var(--offset)));
+  border-radius: max(4px, calc(var(--bi-radius) - var(--offset)));
   background: #FFF8;
   backdrop-filter: blur(8px);
   transition: transform 0.3s;

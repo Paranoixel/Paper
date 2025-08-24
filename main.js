@@ -1,15 +1,13 @@
-import { data as $data } from './js/config.js'
+import { data as $data, NAME, SP, SAVEPREFIX as $spf } from './js/config.js'
 
+const pf = '--'
 const $curConf = {}
 initData($data)
 
 const box = $('#box')
 const bgImg = $('.img')
 const preview = $('#preview')
-const prevBtn = $('#switchPreview')
-const fullBtn = $('#full')
 const list = $('#list')
-const MockBtn = $('#switchMock')
 const codeBox = $('#codeBox')
 const saves = $('#saves')
 const m = $('#modal')
@@ -45,7 +43,7 @@ function switchModal(x) {
   m[x ? '_show' : 'close']()
 }
 
-handleClick(prevBtn, () => {
+handleClick($('#switchPreview'), () => {
   $('.main').classList.toggle('prev')
   preview.classList.toggle('hide')
 }, 1)
@@ -63,7 +61,7 @@ handleClick($('#edit'), () => {
   $('.actions').classList.toggle('cover')
 }, 1)
 
-handleClick(MockBtn, () => {
+handleClick($('#switchMock'), () => {
   $('#mock').classList.toggle('hide')
 }, 1)
 
@@ -83,12 +81,12 @@ $('#mockup').addEventListener('change', ({ target }) => {
   upload(target, 'mockup')
 })
 
-handleClick(fullBtn, () => {
+handleClick($('#full'), () => {
   $('.main').classList.toggle('mini')
 }, 1)
 
 handleClick($('#save'), () => {
-  const key = 'w_' + Date.now()
+  const key = `${$spf}${Date.now()}`
   const diff = diffData()
   localStorage.setItem(key, JSON.stringify(diff))
   const r = renderRecord(key)
@@ -145,9 +143,9 @@ function diffData() {
 function renderConf(id) {
   const changed = id !== list.dataset.active
   if (changed) {
-    const inputs = renderInputs($curConf, id.slice(1))
+    const form = renderHandler($curConf, id.slice(1))
     $('#tab').innerHTML = ''
-    $('#tab').appendChild(inputs)
+    $('#tab').appendChild(form)
   }
   updateSelected(changed ? id : '')
 }
@@ -156,7 +154,7 @@ function initSaves() {
   const frag = document.createDocumentFragment()
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i)
-    if (!key.startsWith('w_')) continue
+    if (!key.startsWith($spf)) continue
     const r = renderRecord(key)
     frag.appendChild(r)
   }
@@ -197,6 +195,127 @@ function upload(target, type) {
 }
 
 addTransformSupport()
+
+function initData(data) {
+  Object.keys(data).forEach(key => {
+    _update(key, data[key])
+  })
+}
+
+function _update(key, v) {
+  // console.log(key, v)
+  const _v = v?.trim()
+  $curConf[key] = _v
+  document.body.style.setProperty(`${pf}${key}`, _v)
+}
+
+function renderRecord(key) {
+  const ts = new Date(+key.replace($spf, '')).toLocaleString()
+  const c = JSON.parse(localStorage.getItem(key))
+  const div = $ce('div', {
+    className: 'record',
+    innerHTML: `<p id="${key}">[${c[NAME]|| 'Untitled'}] ${ts}</p><p id="del_${key}" class="x">×</p>`
+  })
+  return div
+}
+
+function renderHandler(data, type) {
+  const frag = document.createDocumentFragment()
+  for (const key in data) {
+    if (!key.startsWith(`${type}`)) continue
+    const value = data[key]
+    const div = $ce('div', {
+      className: 'items'
+    })
+    const span = $ce('span', {
+      textContent: key
+    })
+    const input = $ce('input', {
+      onblur: ({ target }) => {
+        _update(key, target.value)
+      },
+      value,
+      name: key,
+      spellcheck: false,
+      placeholder: $data[key]
+    })
+    div.appendChild(span)
+    const isColor = key.includes('-color')
+    const isSpecial = key.includes(SP)
+    const isNum = !isColor && !isSpecial
+    div.appendChild(input)
+    if (isColor) {
+      const color = $ce('p', {
+        className: 'btn',
+        style: `--btn-bg: var(${pf}${key});`
+      })
+      div.appendChild(color)
+    }
+    if (isNum) {
+      const up = renderBtn('+')
+      const down = renderBtn('-')
+      function renderBtn(type) {
+        const btn = $ce('p', {
+          textContent: type,
+          className: 'btn _s c',
+          onclick: () => {
+            let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(data[key])
+            num = +num + (type === '+' ? 1 : -1)
+            const n = `${num}${unit}`
+            input.value = n
+            _update(key, n)
+          }
+        })
+        return btn
+      }
+      div.appendChild(up)
+      div.appendChild(down)
+    }
+    frag.appendChild(div)
+  }
+  return frag
+}
+
+let timer
+async function _notif(t) {
+  const notif = $('#notif')
+  const _t = () => new Promise((resolve) => {
+    clearTimeout(timer)
+    _done()
+    notif.addEventListener('transitionend', resolve, { once: true })
+  })
+  if (timer) await _t()
+  notif.textContent = t
+  notif.classList.add('show')
+  timer = setTimeout(_done, 2500)
+  function _done() {
+    notif.classList.remove('show')
+    timer = null;
+  }
+}
+
+function $(s) {
+  return document.querySelector(s)
+}
+
+function handleClick(elm, handle, r) {
+  if (!elm) return
+  elm.addEventListener('click', (e) => {
+    handle(e)
+    if (r) elm.classList.toggle('actived')
+  })
+}
+
+function $ce(type, props = {}) {
+  const el = document.createElement(type)
+  if (Object.keys(props).length) {
+    for (const key in props) {
+      el[key] = props[key]
+    }
+  }
+  return el
+}
+
 function addTransformSupport() {
   const bg = $('#bg')
   let scale = 1, tX = 0, ty = 0, lastPointer = { x: 0, y: 0 }
@@ -273,122 +392,4 @@ function addTransformSupport() {
       lastPointer = null
     }
   })
-}
-
-function initData(data) {
-  Object.keys(data).forEach(key => {
-    _update(key, data[key])
-  })
-}
-
-function _update(key, v) {
-  // console.log(key, v)
-  const _v = v?.trim()
-  $curConf[key] = _v
-  document.body.style.setProperty(key, _v)
-}
-
-function renderRecord(key) {
-  const ts = new Date(+key.replace('w_', '')).toLocaleString()
-  const div = $ce('div', {
-    className: 'record',
-    innerHTML: `<p id="${key}">${ts}</p><p id="del_${key}" class="x">×</p>`
-  })
-  return div
-}
-
-function renderInputs(data, type) {
-  const frag = document.createDocumentFragment()
-  for (const key in data) {
-    if (!key.startsWith(`--${type}`)) continue
-    const value = data[key]
-    const div = $ce('div', {
-      className: 'items'
-    })
-    const span = $ce('span', {
-      textContent: key.replace('--', '')
-    })
-    const input = $ce('input', {
-      onblur: ({ target }) => {
-        _update(key, target.value)
-      },
-      value,
-      name: key,
-      spellcheck: false,
-      placeholder: $data[key]
-    })
-    div.appendChild(span)
-    const isColor = key.includes('color')
-    const isNum = !isColor && !key.includes('ratio')
-    div.appendChild(input)
-    if (isColor) {
-      const color = $ce('p', {
-        className: 'btn',
-        style: `--btn-bg: var(${key});`
-      })
-      div.appendChild(color)
-    }
-    if (isNum) {
-      const up = renderBtn('+')
-      const down = renderBtn('-')
-      function renderBtn(type) {
-        const btn = $ce('p', {
-          textContent: type,
-          className: 'btn _s c',
-          onclick: () => {
-            let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(data[key])
-            num = +num + (type === '+' ? 1 : -1)
-            const n = `${num}${unit}`
-            input.value = n
-            _update(key, n)
-          }
-        })
-        return btn
-      }
-      div.appendChild(up)
-      div.appendChild(down)
-    }
-    frag.appendChild(div)
-  }
-  return frag
-}
-
-let timer
-async function _notif(t) {
-  const notif = $('#notif')
-  const _t = () => new Promise((resolve) => {
-    clearTimeout(timer)
-    _done()
-    notif.addEventListener('transitionend', resolve, { once: true })
-  })
-  if (timer) await _t()
-  notif.textContent = t
-  notif.classList.add('show')
-  timer = setTimeout(_done, 2500)
-  function _done() {
-    notif.classList.remove('show')
-    timer = null;
-  }
-}
-
-function $(s) {
-  return document.querySelector(s)
-}
-
-function handleClick(elm, handle, r) {
-  if (!elm) return
-  elm.addEventListener('click', (e) => {
-    handle(e)
-    if (r) elm.classList.toggle('actived')
-  })
-}
-
-function $ce(type, props = {}) {
-  const el = document.createElement(type)
-  if (Object.keys(props).length) {
-    for (const key in props) {
-      el[key] = props[key]
-    }
-  }
-  return el
 }
