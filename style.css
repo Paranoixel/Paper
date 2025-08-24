@@ -415,9 +415,9 @@ body {
 
 #notif {
   --offset: 16px;
-  --top: -200px;
+  --top: -100px;
   position: fixed;
-  top: var(--top);
+  bottom: var(--top);
   width: calc(100% - var(--offset) * 2);
   text-align: center;
   margin: 0 var(--offset);
@@ -429,5 +429,5 @@ body {
 }
 
 .show {
-  transform: translateY(calc(var(--offset) - var(--top)));
+  transform: translateY(calc( var(--top) - var(--offset)));
 }
