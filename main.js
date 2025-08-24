@@ -1,7 +1,8 @@
-let locked = true, selected = ''
+import { data as $data } from './js/config.js'
 
-const $data = getProps()
-const $config = { ...$data }
+const $curConf = {}
+initData($data)
+
 const box = $('#box')
 const bgImg = $('.img')
 const preview = $('#preview')
@@ -12,29 +13,36 @@ const MockBtn = $('#switchMock')
 const codeBox = $('#codeBox')
 const saves = $('#saves')
 const m = $('#modal')
-m._show = m.show
-m.show = function () {
-  this._show()
+m._show = function () {
+  this.show()
   document.activeElement.blur()
 }
 
-m.auto = function () {
-  m[m.open ? 'close' : 'show']()
-}
 initSaves()
 
-handleClick(list, ({ target }) => {
-  const { id } = target;
+handleClick(list, ({ target: { id } }) => {
   if (id.startsWith('_')) {
-    renderConf(id.slice(1))
+    renderConf(id)
   }
 })
 
-handleClick($('#cls'), switchModal)
+handleClick($('#cls'), () => {
+  updateSelected()
+})
 
-function switchModal(mode = 'auto') {
-  const s = mode === 'auto' ? 'auto' : mode ? 'close' : 'show'
-  m[s]()
+function updateSelected(id = '') {
+  const last = list.dataset.active
+  if (last !== '') {
+    $(`#${last}`)?.classList.remove('actived')
+  }
+  list.setAttribute('data-active', id)
+  switchModal(id)
+  if (id === '') return
+  $(`#${id}`)?.classList.add('actived')
+}
+
+function switchModal(x) {
+  m[x ? '_show' : 'close']()
 }
 
 handleClick(prevBtn, () => {
@@ -43,7 +51,6 @@ handleClick(prevBtn, () => {
 }, 1)
 
 handleClick($('#lock'), () => {
-  locked = !locked
   box.classList.toggle('unlock')
   $('#restore').classList.toggle('disabled')
 }, 1)
@@ -71,6 +78,7 @@ handleClick($('#fullscreen'), () => {
 $('#wallpaper').addEventListener('change', ({ target }) => {
   upload(target, 'wallpaper')
 })
+
 $('#mockup').addEventListener('change', ({ target }) => {
   upload(target, 'mockup')
 })
@@ -82,13 +90,10 @@ handleClick(fullBtn, () => {
 handleClick($('#save'), () => {
   const key = 'w_' + Date.now()
   const diff = diffData()
-  if (!Object.keys(diff).length) {
-    alert('no change')
-    return
-  }
   localStorage.setItem(key, JSON.stringify(diff))
   const r = renderRecord(key)
   saves.appendChild(r)
+  _notif('saved')
 })
 
 handleClick($('#load'), () => {
@@ -113,7 +118,7 @@ handleClick($('#paste'), async () => {
     const t = await navigator.clipboard.readText()
     codeBox.textContent = t?.trim()
   } catch (err) {
-    alert('paste failed:' + err)
+    _notif('paste failed:' + err)
   }
 })
 
@@ -121,38 +126,30 @@ handleClick($('#copy'), async () => {
   const t = codeBox.textContent.trim()
   try {
     await navigator.clipboard.writeText(t)
-    alert('copied')
+    _notif('copied')
   } catch (err) {
-    alert('copy failed:' + err)
+    _notif('copy failed:' + err)
   }
 })
 
 function diffData() {
   const diff = {}
-  for (const key in $config) {
-    if ($config[key] !== '' && $config[key] !== $data[key]) {
-      diff[key] = $config[key]
+  for (const key in $curConf) {
+    if ($curConf[key] !== '' && $curConf[key] !== $data[key]) {
+      diff[key] = $curConf[key]
     }
   }
   return diff
 }
 
-function renderConf(type) {
-  const changed = type !== selected
+function renderConf(id) {
+  const changed = id !== list.dataset.active
   if (changed) {
-    const inputs = renderInputs($config, type)
+    const inputs = renderInputs($curConf, id.slice(1))
     $('#tab').innerHTML = ''
     $('#tab').appendChild(inputs)
-    selected = type
   }
-  switchModal(changed ? 0 : 'auto')
-}
-
-function importData(data) {
-  for (const key in data) {
-    if (!$config.hasOwnProperty(key)) continue
-    _update(key, data[key])
-  }
+  updateSelected(changed ? id : '')
 }
 
 function initSaves() {
@@ -164,12 +161,13 @@ function initSaves() {
     frag.appendChild(r)
   }
   saves.appendChild(frag)
-  handleClick(saves, ({ target }) => {
+  handleClick(saves, ({ target, currentTarget }) => {
     const { id } = target
-    if (!id) return
+    if (!id || id === currentTarget.id) return
     if (id.startsWith('del_')) {
       localStorage.removeItem(id.replace('del_', ''))
       saves.removeChild(target.parentElement)
+      _notif('deleted')
       return
     }
     parseData(localStorage.getItem(id))
@@ -179,10 +177,11 @@ function initSaves() {
 function parseData(s) {
   try {
     const data = JSON.parse(s)
-    importData(data)
-    switchModal(1)
+    initData({ ...$data, ...data })
+    updateSelected()
+    _notif('loaded')
   } catch (err) {
-    alert(`err: ${err}`)
+    _notif(`err: ${err}`)
   }
 }
 
@@ -227,7 +226,7 @@ function addTransformSupport() {
   })
 
   bg.addEventListener('pointerdown', ({ pointerId: id, clientX, clientY }) => {
-    if (locked) return
+    if (!box.classList.contains('unlock')) return
     bg.setPointerCapture(id)
     pointers.set(id, { id, x: clientX, y: clientY })
     if (pointers.size === 1) {
@@ -276,14 +275,16 @@ function addTransformSupport() {
   })
 }
 
+function initData(data) {
+  Object.keys(data).forEach(key => {
+    _update(key, data[key])
+  })
+}
+
 function _update(key, v) {
-  console.log(key, v)
+  // console.log(key, v)
   const _v = v?.trim()
-  $config[key] = _v
-  // if (_v === $data[key]) {
-  //   box.style.removeProperty(key)
-  //   return
-  // }
+  $curConf[key] = _v
   document.body.style.setProperty(key, _v)
 }
 
@@ -291,7 +292,7 @@ function renderRecord(key) {
   const ts = new Date(+key.replace('w_', '')).toLocaleString()
   const div = $ce('div', {
     className: 'record',
-    innerHTML: `<div id="${key}">${ts}</div><div id="del_${key}" class="x">×</div>`
+    innerHTML: `<p id="${key}">${ts}</p><p id="del_${key}" class="x">×</p>`
   })
   return div
 }
@@ -321,11 +322,9 @@ function renderInputs(data, type) {
     const isNum = !isColor && !key.includes('ratio')
     div.appendChild(input)
     if (isColor) {
-      const color = $ce('input', {
-        type: 'color',
-        value,
-        // className: 'btn',
-        // style: `--btn-bg: var(${key});`
+      const color = $ce('p', {
+        className: 'btn',
+        style: `--btn-bg: var(${key});`
       })
       div.appendChild(color)
     }
@@ -333,7 +332,7 @@ function renderInputs(data, type) {
       const up = renderBtn('+')
       const down = renderBtn('-')
       function renderBtn(type) {
-        const btn = $ce('div', {
+        const btn = $ce('p', {
           textContent: type,
           className: 'btn _s c',
           onclick: () => {
@@ -353,26 +352,23 @@ function renderInputs(data, type) {
   }
   return frag
 }
-function getProps() {
-  const props = {}
-  for (const sheet of document.styleSheets) {
-    let rules
-    try {
-      rules = sheet.cssRules
-    } catch (e) {
-      continue
-    }
-    for (const rule of rules) {
-      if (rule.selectorText === 'body') {
-        for (const name of rule.style) {
-          if (name.startsWith('--')) {
-            props[name] = window.getComputedStyle(document.body).getPropertyValue(name)
-          }
-        }
-      }
-    }
+
+let timer
+async function _notif(t) {
+  const notif = $('#notif')
+  const _t = () => new Promise((resolve) => {
+    clearTimeout(timer)
+    _done()
+    notif.addEventListener('transitionend', resolve, { once: true })
+  })
+  if (timer) await _t()
+  notif.textContent = t
+  notif.classList.add('show')
+  timer = setTimeout(_done, 2500)
+  function _done() {
+    notif.classList.remove('show')
+    timer = null;
   }
-  return props
 }
 
 function $(s) {
