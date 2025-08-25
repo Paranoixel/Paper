@@ -230,7 +230,7 @@ function renderHandler(data, type) {
       className: 'items'
     })
     const span = $ce('span', {
-      textContent: key
+      textContent: key.replace(`${type}-`, '')
     })
     const input = $ce('input', {
       onblur: ({ target }) => {
@@ -252,16 +252,16 @@ function renderHandler(data, type) {
         style: `--btn-bg: var(${pf}${key});`,
         onclick: () => {
           // show dialog
-          if ('EyeDropper' in window) {
-            const eyeDropper = new EyeDropper();
-            eyeDropper.open().then(res => {
-              input.value = res.sRGBHex
-              _update(key, input.value)
-            }).catch(err => {
-              _notif('err:' + err)
-            });
+          if (!'EyeDropper' in window) {
+            return _notif('not supported')
           }
-
+          const eyeDropper = new EyeDropper();
+          eyeDropper.open().then(res => {
+            input.value = res.sRGBHex
+            _update(key, input.value)
+          }).catch(err => {
+            _notif('err:' + err)
+          });
         }
       })
       div.appendChild(color)

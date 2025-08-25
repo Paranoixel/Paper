@@ -4,7 +4,7 @@ export const SAVEPREFIX = 'Pa_'
 const AR = `bi-${SP}-ar`
 
 export const data = {
-  "bd-z": "2",
+  "bd-z-index": "2",
   "bd-width": "10px",
   "bd-color": "#3748E7",
   "bd-bg-color": "#000",
@@ -12,7 +12,7 @@ export const data = {
   "hm-hight": "0px",
   "hm-radius": "50px",
   "hm-bg-color": "#F287CF",
-  "sb-z": "1",
+  "sb-z-index": "1",
   "sb-opacity": "1",
   "sb-height": "26px",
   "sb-top": "10px",
