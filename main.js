@@ -10,11 +10,6 @@ const preview = $('#preview')
 const list = $('#list')
 const codeBox = $('#codeBox')
 const saves = $('#saves')
-const m = $('#modal')
-m._show = function () {
-  this.show()
-  document.activeElement.blur()
-}
 
 initSaves()
 
@@ -22,10 +17,6 @@ handleClick(list, ({ target: { id } }) => {
   if (id.startsWith('_')) {
     renderConf(id)
   }
-})
-
-handleClick($('#cls'), () => {
-  updateSelected()
 })
 
 function updateSelected(id = '') {
@@ -39,8 +30,12 @@ function updateSelected(id = '') {
   $(`#${id}`)?.classList.add('actived')
 }
 
+handleClick($('#swapBtn'), () => {
+  $('#console').classList.toggle('swap')
+})
+
 function switchModal(x) {
-  m[x ? '_show' : 'close']()
+  $('#console').classList[x ? 'add' : 'remove']('slide')
 }
 
 handleClick($('#switchPreview'), () => {
@@ -58,7 +53,7 @@ handleClick($('#switchCont'), () => {
 }, 1)
 
 handleClick($('#edit'), () => {
-  $('.actions').classList.toggle('cover')
+  $('.actions').classList.toggle('slide')
 }, 1)
 
 handleClick($('#switchMock'), () => {
@@ -95,7 +90,7 @@ handleClick($('#save'), () => {
 })
 
 handleClick($('#load'), () => {
-  $('.board').classList.toggle('cover')
+  $('.board').classList.toggle('slide')
 }, 1)
 
 handleClick($('#export'), () => {
@@ -214,7 +209,7 @@ function renderRecord(key) {
   const c = JSON.parse(localStorage.getItem(key))
   const div = $ce('div', {
     className: 'record',
-    innerHTML: `<p id="${key}">[${c[NAME]|| 'Untitled'}] ${ts}</p><p id="del_${key}" class="x">×</p>`
+    innerHTML: `<p id="${key}">[${c[NAME] || 'Untitled'}] ${ts}</p><p id="del_${key}" class="x">×</p>`
   })
   return div
 }
@@ -286,10 +281,10 @@ async function _notif(t) {
   })
   if (timer) await _t()
   notif.textContent = t
-  notif.classList.add('show')
+  notif.classList.add('slide')
   timer = setTimeout(_done, 2500)
   function _done() {
-    notif.classList.remove('show')
+    notif.classList.remove('slide')
     timer = null;
   }
 }

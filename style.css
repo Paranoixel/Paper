@@ -15,7 +15,7 @@ body {
   overscroll-behavior-y: contain;
   background: #E0E8FF;
   padding-bottom: 300px;
-  font-size: 13px;
+  font-size: 14px;
   margin: 0 auto;
 }
 
@@ -25,17 +25,16 @@ body {
   position: relative;
   width: 100vw;
   height: calc(100vw / (var(--aspect-ratio)));
-  overflow: auto;
   transition: all ease-in-out .3s;
+  overflow: hidden;
 
   &.prev {
-    overflow: hidden;
     --scale: 1
   }
 }
 
 .mini {
-  height: 40vh;
+  height: 60vh;
 }
 
 .c {
@@ -49,7 +48,8 @@ body {
   aspect-ratio: var(--aspect-ratio);
   user-select: none;
   background: var(--bd-bg-color, #000);
-  transition: all ease-in-out .4s;
+  transition: all ease-in-out .3s;
+  overflow: hidden;
 
   &.unlock {
     transform: scale(.9);
@@ -82,7 +82,7 @@ body {
   aspect-ratio: var(--aspect-ratio);
   border-radius: var(--bi-radius);
   transform: scale(var(--scale));
-  transition: all ease-in-out .4s;
+  transition: all ease-in-out .3s;
 }
 
 #preview {
@@ -138,7 +138,6 @@ body {
     opacity: 1;
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
     line-height: 14px;
   }
 
@@ -156,10 +155,6 @@ body {
     font-size: 28px;
     line-height: var(--fp-size);
   }
-}
-
-.a {
-  position: absolute;
 }
 
 #container {
@@ -260,13 +255,77 @@ body {
   }
 }
 
+#console {
+  --trans-y: -25vh;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: var(--trans-y);
+  width: 100%;
+  height: calc(-1 * var(--trans-y));
+  padding: 16px;
+  background: #fffb;
+  touch-action: none;
+  transition: transform ease-in-out 0.3s;
+
+  &.swap {
+    --trans-y: 40vh;
+    bottom: unset;
+    top: calc(-1 * var(--trans-y));
+    height: var(--trans-y);
+
+    #swapBtn {
+      --h: 10vh;
+    }
+  }
+}
+
+#swapBtn {
+  --h: 32px;
+  height: var(--h);
+  line-height: var(--h);
+  margin-bottom: 8px;
+}
+
+#tab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+
+  .items {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: space-between;
+
+    span {
+      min-width: 120px;
+    }
+
+    input {
+      height: 28px;
+      width: 100px;
+      flex: 5;
+      text-indent: 8px;
+      background: #0000;
+      border-radius: 8px;
+    }
+
+    .btn {
+      height: 100%;
+      flex: 1;
+    }
+  }
+}
+
 .nav {
   overflow: hidden;
   padding: 8px 16px;
 }
 
 .actions {
-  --cover-y: -56px;
+  --trans-y: -56px;
   --btn-bg: #000;
   --btn-color: #fff;
   display: flex;
@@ -274,14 +333,6 @@ body {
   gap: 8px;
   transition: transform 0.3s;
 
-  .g {
-    display: flex;
-    gap: 8px;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed #000;
-  }
 }
 
 #list {
@@ -305,7 +356,7 @@ body {
   background: var(--btn-bg);
   border-radius: 12px;
   color: var(--btn-color);
-  transition: border-radius 0.3s;
+  transition: border-radius .3s;
 
   &:active {
     border-radius: 4px;
@@ -316,57 +367,13 @@ body {
   --btn-color: #d94d26;
 }
 
-#modal {
-  position: fixed;
-  z-index: 100;
-  bottom: 380px;
-  margin: 0 24px;
-  width: calc(100% - 48px);
-  padding: 8px;
-  border-radius: 8px;
-  background: #fffa;
-  touch-action: none;
-}
-
-#tab {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 18px;
-
-  .items {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    justify-content: space-between;
-
-    span {
-      min-width: 120px;
-    }
-
-    input {
-      width: 100px;
-      flex: 6;
-      text-align: center;
-      height: 28px;
-      background: #0000;
-      border-radius: 8px;
-    }
-
-    .btn {
-      height: 100%;
-      flex: 1;
-    }
-  }
-}
-
 #saves {
   height: 160px;
   overflow-y: auto;
 
   &:empty::before {
     display: block;
-    padding: 8px;
+    text-align: center;
     content: 'No record';
   }
 }
@@ -379,9 +386,9 @@ body {
 }
 
 .board {
-  --cover-y: -168px;
+  --trans-y: -168px;
   position: relative;
-  transition: transform 0.3s;
+  transition: transform ease-in-out 0.3s;
 }
 
 .cover {
@@ -395,6 +402,22 @@ body {
   gap: 8px;
 }
 
+.g {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.end {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #666;
+}
+
+.a {
+  position: absolute;
+}
+
 .x {
   line-height: 28px;
   text-align: center;
@@ -404,7 +427,7 @@ body {
 ._s {
   padding: 4px 8px;
   border-radius: 99px;
-  border: 2px solid currentColor;
+  border: 1px solid currentColor;
 }
 
 #codeBox {
@@ -416,6 +439,7 @@ body {
 #notif {
   --offset: 16px;
   --top: -100px;
+  --trans-y: calc(var(--top) - var(--offset));
   position: fixed;
   bottom: var(--top);
   width: calc(100% - var(--offset) * 2);
@@ -425,9 +449,9 @@ body {
   border-radius: max(4px, calc(var(--bi-radius) - var(--offset)));
   background: #FFF8;
   backdrop-filter: blur(8px);
-  transition: transform 0.3s;
+  transition: transform ease-in-out 0.3s;
 }
 
-.show {
-  transform: translateY(calc( var(--top) - var(--offset)));
+.slide {
+  transform: translateY(var(--trans-y));
 }
