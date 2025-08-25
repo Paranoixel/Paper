@@ -14,7 +14,6 @@ body {
   font-family: system-ui;
   overscroll-behavior-y: contain;
   background: #E0E8FF;
-  padding-bottom: 300px;
   font-size: 14px;
   margin: 0 auto;
 }
@@ -420,7 +419,6 @@ body {
 
 .x {
   line-height: 28px;
-  text-align: center;
   font-size: 28px;
 }
 
@@ -443,7 +441,6 @@ body {
   position: fixed;
   bottom: var(--top);
   width: calc(100% - var(--offset) * 2);
-  text-align: center;
   margin: 0 var(--offset);
   padding: 16px 24px;
   border-radius: max(4px, calc(var(--bi-radius) - var(--offset)));

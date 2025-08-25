@@ -2,7 +2,8 @@ import { data as $data, NAME, SP, SAVEPREFIX as $spf } from './js/config.js'
 
 const pf = '--'
 const $curConf = {}
-initData($data)
+const $palette = {}
+initData()
 
 const box = $('#box')
 const bgImg = $('.img')
@@ -169,8 +170,7 @@ function initSaves() {
 
 function parseData(s) {
   try {
-    const data = JSON.parse(s)
-    initData({ ...$data, ...data })
+    initData(JSON.parse(s))
     updateSelected()
     _notif('loaded')
   } catch (err) {
@@ -191,15 +191,22 @@ function upload(target, type) {
 
 addTransformSupport()
 
-function initData(data) {
-  Object.keys(data).forEach(key => {
-    _update(key, data[key])
+function initData(data = {}) {
+  const f = data[NAME]?.includes('_pa')
+  const d = f ? data : { ...$data, ...data }
+  Object.keys(d).forEach(key => {
+    _update(key, d[key], f)
   })
 }
 
-function _update(key, v) {
+function _update(key, v, flag = false) {
   // console.log(key, v)
   const _v = v?.trim()
+  if (flag) {
+    document.documentElement.style.setProperty(`${pf}${key}`, _v)
+    $palette[key] = _v
+    return
+  }
   $curConf[key] = _v
   document.body.style.setProperty(`${pf}${key}`, _v)
 }
@@ -209,7 +216,7 @@ function renderRecord(key) {
   const c = JSON.parse(localStorage.getItem(key))
   const div = $ce('div', {
     className: 'record',
-    innerHTML: `<p id="${key}">[${c[NAME] || 'Untitled'}] ${ts}</p><p id="del_${key}" class="x">×</p>`
+    innerHTML: `<p id="${key}">[${c[NAME] || 'Untitled'}] ${ts}</p><p id="del_${key}" class="x c">×</p>`
   })
   return div
 }
@@ -242,7 +249,20 @@ function renderHandler(data, type) {
     if (isColor) {
       const color = $ce('p', {
         className: 'btn',
-        style: `--btn-bg: var(${pf}${key});`
+        style: `--btn-bg: var(${pf}${key});`,
+        onclick: () => {
+          // show dialog
+          if ('EyeDropper' in window) {
+            const eyeDropper = new EyeDropper();
+            eyeDropper.open().then(res => {
+              input.value = res.sRGBHex
+              _update(key, input.value)
+            }).catch(err => {
+              _notif('err:' + err)
+            });
+          }
+
+        }
       })
       div.appendChild(color)
     }

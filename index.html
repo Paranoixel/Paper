@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Papeer 1.2.9 beta4</title>
+  <title>Papper</title>
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./main.js" defer></script>
 </head>
@@ -55,7 +55,7 @@
         <p id="_hm" class="btn c">Hole Mask</p>
         <p id="_bi" class="btn c">Basic Info</p>
       </div>
-      <div class="g end">
+      <div class="g">
         <p id="switchPreview" class="btn c">Preview</p>
         <p id="fullscreen" class="btn c">Fullscreen</p>
         <!-- <p id="full" class="btn c actived">Fullview</p> -->
@@ -65,16 +65,18 @@
           <p id="restore" class="btn c disabled">Restore</p>
         </div>
         <p id="brightUp" class="btn c actived">Lighter</p>
-        <p id="switchMock" class="btn c">Mock</p>
         <p id="switchCont" class="btn c actived">Container</p>
-        <label class="upload c btn" for="mockup">
-          <span>Upload Mock</span>
-          <input type="file" id="mockup" accept="image/*">
-        </label>
+      </div>
+      <div class="g end">
         <label class="upload c btn" for="wallpaper">
           <span>Upload Wallpaper</span>
           <input type="file" id="wallpaper" accept="image/*">
         </label>
+        <label class="upload c btn" for="mockup">
+          <span>Upload Mock</span>
+          <input type="file" id="mockup" accept="image/*">
+        </label>
+        <p id="switchMock" class="btn c">Mock</p>
       </div>
       <div class="g">
         <p id="save" class="btn c">Save</p>
@@ -93,7 +95,8 @@
       </div>
     </div>
   </div>
-  <div id="notif"></div>
+  <div id="notif" class="c"></div>
+  <div class="c end">ver 1.3.0</div>
 </body>
 
 </html>
