@@ -22,7 +22,6 @@ body {
   --scale: calc(1 / var(--bi-wallpaper-scale));
   --aspect-ratio: var(--bi-SP-ar, 1);
   position: relative;
-  width: 100vw;
   height: calc(100vw / (var(--aspect-ratio)));
   transition: all ease-in-out .3s;
   overflow: hidden;
@@ -54,7 +53,11 @@ body {
     transform: scale(.9);
 
     #bg {
-      z-index: 999;
+      z-index: 199;
+
+      .img {
+        touch-action: none;
+      }
     }
   }
 }
@@ -167,13 +170,13 @@ body {
 #bd {
   width: 100%;
   height: 100%;
-  z-index: var(--bd-z);
+  z-index: var(--bd-z-index);
   border: var(--bd-width) solid var(--bd-color);
   border-radius: var(--bi-radius);
 }
 
 #hm {
-  z-index: calc(var(--sb-z) + 1);
+  z-index: calc(var(--sb-z-index) + 1);
   top: calc(var(--bi-hole-size) / 2 + var(--bi-hole-top) - var(--hm-hight) / 2);
   left: calc(50% - var(--hm-width) / 2);
   width: var(--hm-width);
@@ -198,7 +201,8 @@ body {
   height: 100%;
   transform-origin: 0 0;
   background: url('../w.png') center/contain no-repeat;
-  touch-action: none;
+  transform: var(--bg-SP-trans);
+  /* touch-action: none; */
 }
 
 #cd {
@@ -222,7 +226,7 @@ body {
   top: var(--sb-top);
   background: var(--sb-bg-color);
   backdrop-filter: blur(var(--sb-blur));
-  z-index: var(--sb-z);
+  z-index: var(--sb-z-index);
 }
 
 .pfp,
@@ -264,7 +268,6 @@ body {
   height: calc(-1 * var(--trans-y));
   padding: 16px;
   background: #fffb;
-  touch-action: none;
   transition: transform ease-in-out 0.3s;
 
   &.swap {

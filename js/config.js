@@ -2,6 +2,7 @@ export const SP = 'SP'
 export const NAME = `bi-${SP}-name`
 export const SAVEPREFIX = 'Pa_'
 const AR = `bi-${SP}-ar`
+export const BGTRANS = `bg-${SP}-trans`
 
 export const data = {
   "bd-z-index": "2",
@@ -39,6 +40,7 @@ export const data = {
   "bg-blur": "0px",
   "bg-radius": "0px",
   "bg-color": "#aaa",
+  [BGTRANS]: "",
   "cd-opacity": "1",
   "cd-height": "267px",
   "cd-top": "614px",

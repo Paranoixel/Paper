@@ -1,4 +1,4 @@
-import { data as $data, NAME, SP, SAVEPREFIX as $spf } from './js/config.js'
+import { data as $data, NAME, SP, BGTRANS, SAVEPREFIX as $spf } from './js/config.js'
 
 const pf = '--'
 const $curConf = {}
@@ -6,7 +6,6 @@ const $palette = {}
 initData()
 
 const box = $('#box')
-const bgImg = $('.img')
 const preview = $('#preview')
 const list = $('#list')
 const codeBox = $('#codeBox')
@@ -108,12 +107,7 @@ handleClick($('#clear'), () => {
 })
 
 handleClick($('#paste'), async () => {
-  try {
-    const t = await navigator.clipboard.readText()
-    codeBox.textContent = t?.trim()
-  } catch (err) {
-    _notif('paste failed:' + err)
-  }
+  codeBox.textContent = await paste()
 })
 
 handleClick($('#copy'), async () => {
@@ -124,6 +118,10 @@ handleClick($('#copy'), async () => {
   } catch (err) {
     _notif('copy failed:' + err)
   }
+})
+
+handleClick($('#footer'), () => {
+  _notif(`EyeDropper support: ${'EyeDropper' in window}`)
 })
 
 function diffData() {
@@ -183,7 +181,7 @@ function upload(target, type) {
   if (!file) return
   const url = URL.createObjectURL(file)
   if (type === 'wallpaper') {
-    bgImg.style.backgroundImage = `url(${url})`
+    $('.img').style.backgroundImage = `url(${url})`
   } else if (type === 'mockup') {
     $('#mock').style.background = `url(${url}) center/contain no-repeat`
   }
@@ -250,18 +248,12 @@ function renderHandler(data, type) {
       const color = $ce('p', {
         className: 'btn',
         style: `--btn-bg: var(${pf}${key});`,
-        onclick: () => {
+        onclick: async () => {
           // show dialog
-          if (!'EyeDropper' in window) {
-            return _notif('not supported')
-          }
-          const eyeDropper = new EyeDropper();
-          eyeDropper.open().then(res => {
-            input.value = res.sRGBHex
-            _update(key, input.value)
-          }).catch(err => {
-            _notif('err:' + err)
-          });
+          const t = await paste()
+          if (!t) return
+          input.value = t
+          _update(key, t)
         }
       })
       div.appendChild(color)
@@ -331,6 +323,15 @@ function $ce(type, props = {}) {
   return el
 }
 
+async function paste() {
+  try {
+    const t = await navigator.clipboard.readText()
+    return t?.trim()
+  } catch (err) {
+    _notif('paste failed:' + err)
+  }
+}
+
 function addTransformSupport() {
   const bg = $('#bg')
   let scale = 1, tX = 0, ty = 0, lastPointer = { x: 0, y: 0 }
@@ -348,12 +349,12 @@ function addTransformSupport() {
   }
 
   function updateTf() {
-    bgImg.style.transform = `translate(${tX}px, ${ty}px) scale(${scale})`
+    _update(BGTRANS, `translate(${tX}px, ${ty}px) scale(${scale})`)
   }
 
   handleClick($('#restore'), () => {
     pointers.clear()
-    bgImg.style.transform = ''
+    _update(BGTRANS, '')
     scale = 1
     tX = 0
     ty = 0
