@@ -18,13 +18,12 @@ body {
   font-family: system-ui;
   overscroll-behavior-y: contain;
   background: #E0E8FF;
-  font-size: 14px;
   margin: 0 auto;
 }
 
 .main {
   --scale: calc(1 / var(--bi-wallpaper-scale));
-  --aspect-ratio: var(--bi-SP-ar, 1);
+  --aspect-ratio: var(--bi-SP-aspect-ratio, 1);
   position: relative;
   height: calc(100vw / (var(--aspect-ratio)));
   transition: all ease-in-out .3s;
@@ -117,7 +116,7 @@ body {
     margin-top: calc(var(--sb-top) * 2 + var(--sb-height));
     margin-left: var(--t-left);
     padding-top: var(--t-top);
-    color: #d2e4ff;
+    color: var(--main-color);
     line-height: var(--t-height);
     height: var(--t-height);
     font-size: var(--t-size);
@@ -272,7 +271,7 @@ body {
   width: 100%;
   height: calc(-1 * var(--trans-y));
   padding: 16px;
-  background: #fffb;
+  background: #fffc;
   transition: transform ease-in-out 0.3s;
 
   &.swap {
@@ -291,10 +290,10 @@ body {
   --h: 32px;
   height: var(--h);
   line-height: var(--h);
-  margin-bottom: 8px;
 }
 
 #tab {
+  padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -311,7 +310,7 @@ body {
     }
 
     input {
-      height: 28px;
+      height: 32px;
       width: 100px;
       flex: 5;
       text-indent: 8px;

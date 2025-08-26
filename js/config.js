@@ -1,7 +1,7 @@
 export const SP = 'SP'
 export const NAME = `bi-${SP}-name`
 export const SAVEPREFIX = 'Pa_'
-const AR = `bi-${SP}-ar`
+const AR = `bi-${SP}-aspect-ratio`
 export const BGTRANS = `bg-${SP}-trans`
 
 export const data = {

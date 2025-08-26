@@ -54,6 +54,7 @@ handleClick($('#switchCont'), () => {
 
 handleClick($('#edit'), () => {
   $('.actions').classList.toggle('slide')
+  if (!isActived($('#edit'))) updateSelected()
 }, 1)
 
 handleClick($('#switchMock'), () => {
@@ -246,7 +247,7 @@ function renderHandler(data, type) {
     div.appendChild(input)
     if (isColor) {
       const color = $ce('p', {
-        className: 'btn',
+        className: 'btn _s',
         style: `--btn-bg: var(${pf}${key});`,
         onclick: async () => {
           // show dialog
@@ -308,9 +309,13 @@ function $(s) {
 function handleClick(elm, handle, r) {
   if (!elm) return
   elm.addEventListener('click', (e) => {
-    handle(e)
     if (r) elm.classList.toggle('actived')
+    handle(e)
   })
+}
+
+function isActived(elm) {
+  return elm.classList.contains('actived')
 }
 
 function $ce(type, props = {}) {
