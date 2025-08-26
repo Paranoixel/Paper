@@ -38,7 +38,7 @@ function switchModal(x) {
   $('#console').classList[x ? 'add' : 'remove']('slide')
 }
 
-handleClick($('#switchPreview'), () => {
+handleClick($('#prevBtn'), () => {
   $('.main').classList.toggle('prev')
   preview.classList.toggle('hide')
 }, 1)

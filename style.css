@@ -10,6 +10,10 @@ div {
   box-sizing: border-box;
 }
 
+:root {
+  --main-color: #568cff;
+}
+
 body {
   font-family: system-ui;
   overscroll-behavior-y: contain;
@@ -53,7 +57,7 @@ body {
     transform: scale(.9);
 
     #bg {
-      z-index: 199;
+      z-index: 10;
 
       .img {
         touch-action: none;
@@ -88,18 +92,18 @@ body {
 }
 
 #preview {
-  --sb-height: 13px;
-  --sb-top: 16px;
-  --sb-offset-x: 20px;
-  --sc-size: 48px;
-  --sc-bottom: 194px;
-  --sc-offset-x: 64px;
-  --sc-bg-color: #fff;
-  --fp-size: 68px;
-  --fp-bottom: 184px;
-  --fp-offset-x: 166px;
-  --fp-bg-color: #fff;
-  z-index: 99;
+  --sb-height: var(--bi-sb-height);
+  --sb-top: var(--bi-sb-top);
+  --sb-offset-x: var(--bi-sb-offset-x);
+  --sc-size: var(--bi-sc-size);
+  --sc-bottom: var(--bi-sc-bottom);
+  --sc-offset-x: var(--bi-sc-offset-x);
+  --sc-bg-color: var(--bi-sc-bg-color);
+  --fp-size: var(--bi-fp-size);
+  --fp-bottom: var(--bi-fp-bottom);
+  --fp-offset-x: var(--bi-fp-offset-x);
+  --fp-bg-color: var(--bi-fp-bg-color);
+  z-index: 10;
   color: #fff;
   pointer-events: none;
   backdrop-filter: brightness(var(--bi-lockscreen-drim));
@@ -263,6 +267,7 @@ body {
   display: flex;
   flex-direction: column;
   position: absolute;
+  z-index: 10;
   bottom: var(--trans-y);
   width: 100%;
   height: calc(-1 * var(--trans-y));
@@ -366,7 +371,7 @@ body {
 }
 
 .actived {
-  --btn-color: #d94d26;
+  --btn-color: var(--main-color);
 }
 
 #saves {
