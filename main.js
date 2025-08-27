@@ -44,8 +44,12 @@ handleClick($('#prevBtn'), () => {
 }, 1)
 
 handleClick($('#lock'), () => {
-  box.classList.toggle('unlock')
+  $('.main').classList.toggle('unlock')
   $('#restore').classList.toggle('disabled')
+}, 1)
+
+handleClick($('#zoomBtn'), () => {
+  box.classList.toggle('ani')
 }, 1)
 
 handleClick($('#switchCont'), () => {
@@ -362,7 +366,7 @@ function addTransformSupport() {
   })
 
   bg.addEventListener('pointerdown', ({ pointerId: id, clientX, clientY }) => {
-    if (!box.classList.contains('unlock')) return
+    if (!$('.main').classList.contains('unlock')) return
     bg.setPointerCapture(id)
     pointers.set(id, { id, x: clientX, y: clientY })
     if (pointers.size === 1) {
