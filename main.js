@@ -77,10 +77,6 @@ $('#mockup').addEventListener('change', ({ target }) => {
   upload(target, 'mockup')
 })
 
-handleClick($('#full'), () => {
-  $('.main').classList.toggle('mini')
-}, 1)
-
 handleClick($('#save'), () => {
   const key = `${$spf}${Date.now()}`
   const diff = diffData()
