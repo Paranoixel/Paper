@@ -53,9 +53,11 @@ body {
   aspect-ratio: var(--aspect-ratio);
   user-select: none;
   background: var(--bd-bg-color, var(--dark-color));
-  transition: all ease-in-out .3s;
+  transition: all .3s ease-in-out;
   overflow: hidden;
   transform-origin: bottom center;
+  transform: scale(var(--box-scale));
+
 }
 
 .unlock {
@@ -353,7 +355,7 @@ body {
 }
 
 .actions {
-  --trans-y: -68px;
+  --trans-y: -75px;
   --btn-bg: var(--dark-color);
   --btn-color: #fff;
   display: flex;
@@ -364,7 +366,7 @@ body {
 }
 
 #list {
-  height: 70px;
+  height: 68px;
   align-items: center;
   flex-wrap: nowrap;
   overflow-x: auto;
