@@ -22,10 +22,6 @@ body {
   width: 100%;
   height: 100vh;
   overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .main {
@@ -56,8 +52,6 @@ body {
   transition: all .3s ease-in-out;
   overflow: hidden;
   transform-origin: bottom center;
-  transform: scale(var(--box-scale));
-
 }
 
 .unlock {
@@ -187,8 +181,6 @@ body {
 #container {
   pointer-events: all;
   background: var(--bd-bg-color);
-  border-radius: var(--);
-  overflow: hidden;
   z-index: 10;
 }
 
@@ -227,7 +219,6 @@ body {
   transform-origin: 0 0;
   background: url('../w.png') center/contain no-repeat;
   transform: var(--bg-SP-trans);
-  /* touch-action: none; */
 }
 
 #cd {
@@ -464,6 +455,12 @@ body {
   border: 1px solid currentColor;
 }
 
+.hs {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 #codeBox {
   display: block;
   min-height: 160px;
@@ -480,9 +477,17 @@ body {
   margin: 0 var(--offset);
   padding: 16px 24px;
   border-radius: max(4px, var(--bi-radius) - var(--offset));
-  background: #FFF8;
+  background: rgb(from var(--noti-bg, #fff) r g b/0.6);
   backdrop-filter: blur(8px);
   transition: transform ease-in-out 0.3s;
+}
+
+.tip {
+  --noti-bg: var(--main-color);
+}
+
+.err {
+  --noti-bg: #ff4646;
 }
 
 .slide {

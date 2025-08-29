@@ -87,7 +87,7 @@ handleClick($('#save'), () => {
   localStorage.setItem(key, JSON.stringify(diff))
   const r = renderRecord(key)
   saves.appendChild(r)
-  _notif('saved')
+  _notif('Saved')
 })
 
 handleClick($('#load'), () => {
@@ -115,9 +115,9 @@ handleClick($('#copy'), async () => {
   const t = codeBox.textContent.trim()
   try {
     await navigator.clipboard.writeText(t)
-    _notif('copied')
+    _notif('Copied')
   } catch (err) {
-    _notif('copy failed:' + err)
+    _notif(`Copy failed: ${err}`, { type: 2 })
   }
 })
 
@@ -158,9 +158,12 @@ function initSaves() {
     const { id } = target
     if (!id || id === currentTarget.id) return
     if (id.startsWith('del_')) {
-      localStorage.removeItem(id.replace('del_', ''))
-      saves.removeChild(target.parentElement)
-      _notif('deleted')
+      const action = () => {
+        localStorage.removeItem(id.replace('del_', ''))
+        saves.removeChild(target.parentElement)
+        _notif('Deleted')
+      }
+      _notif('Comfirm?', { action, type: 1 })
       return
     }
     parseData(localStorage.getItem(id))
@@ -171,9 +174,9 @@ function parseData(s) {
   try {
     initData(JSON.parse(s))
     updateSelected()
-    _notif('loaded')
+    _notif('Loaded')
   } catch (err) {
-    _notif(`err: ${err}`)
+    _notif(`Error: ${err}`, { type: 2 })
   }
 }
 
@@ -199,7 +202,6 @@ function initData(data = {}) {
 }
 
 function _update(key, v, flag = false) {
-  // console.log(key, v)
   const _v = v?.trim()
   if (flag) {
     document.documentElement.style.setProperty(`${pf}${key}`, _v)
@@ -285,8 +287,11 @@ function renderHandler(data, type) {
 }
 
 let timer
-async function _notif(t) {
+const TYPES = ['', 'tip', 'err']
+
+async function _notif(t, { type = 0, action } = {}) {
   const notif = $('#notif')
+  notif.onclick = typeof action === 'function' ? action : null
   const _t = () => new Promise((resolve) => {
     clearTimeout(timer)
     _done()
@@ -294,8 +299,9 @@ async function _notif(t) {
   })
   if (timer) await _t()
   notif.textContent = t
+  notif.className = `${TYPES[type]} c`
   notif.classList.add('slide')
-  timer = setTimeout(_done, 2500)
+  timer = setTimeout(_done, 3e3)
   function _done() {
     notif.classList.remove('slide')
     timer = null;
@@ -333,7 +339,7 @@ async function paste() {
     const t = await navigator.clipboard.readText()
     return t?.trim()
   } catch (err) {
-    _notif('paste failed:' + err)
+    _notif(`Paste failed: ${err}`, { type: 2 })
   }
 }
 
