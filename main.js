@@ -139,8 +139,8 @@ function renderConf(id) {
   const changed = id !== list.dataset.active
   if (changed) {
     const form = renderHandler($curConf, id.slice(1))
-    $('#tab').innerHTML = ''
-    $('#tab').appendChild(form)
+    $('#form').innerHTML = ''
+    $('#form').appendChild(form)
   }
   updateSelected(changed ? id : '')
 }

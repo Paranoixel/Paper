@@ -307,7 +307,7 @@ body {
   line-height: var(--h);
 }
 
-#tab {
+#form {
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -340,7 +340,7 @@ body {
   }
 }
 
-.nav {
+.pack {
   overflow: hidden;
   padding: 8px 16px;
 }
@@ -349,18 +349,25 @@ body {
   --trans-y: -75px;
   --btn-bg: var(--dark-color);
   --btn-color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   transition: transform 0.3s;
 
-}
+  #list {
+    height: 68px;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
 
-#list {
-  height: 68px;
-  align-items: center;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  .pages {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    overflow: auto;
+
+    .page {
+      flex: 0 0 100%;
+    }
+  }
 }
 
 .upload {
@@ -391,6 +398,7 @@ body {
 #saves {
   height: 160px;
   overflow-y: auto;
+  margin-bottom: 8px;
 
   &:empty::before {
     display: block;
@@ -427,6 +435,7 @@ body {
 .g {
   display: flex;
   gap: 8px;
+  margin-bottom: 8px;
   justify-content: space-between;
   flex-wrap: wrap;
 }
@@ -452,7 +461,7 @@ body {
 ._s {
   padding: 4px 8px;
   border-radius: 99px;
-  border: 1px solid currentColor;
+  border: .5px solid currentColor;
 }
 
 .hs {
@@ -465,6 +474,34 @@ body {
   display: block;
   min-height: 160px;
   white-space: break-spaces;
+}
+
+#tab {
+  --p: 10px;
+  --r: max(var(--bi-radius) - var(--p), 14px);
+  position: fixed;
+  inset: auto var(--p) var(--p);
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: var(--dark-color);
+  color: #fff;
+  height: calc(var(--r) * 2);
+  border-radius: var(--r);
+  animation: scroll 1 both linear;
+  animation-timeline: scroll(root block);
+  animation-range: 0% 20%;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateY(180px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
 }
 
 #notif {
