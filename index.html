@@ -40,68 +40,70 @@
     </div>
     <div id="console" class="a">
       <p id="swapBtn" class="b c end">Swap</p>
-      <div id="form"></div>
+      <div id="form" class="gap8"></div>
     </div>
   </div>
-  <div class="pack">
-    <div class="actions c">
-      <div id="list" class="g end">
-        <p id="_bd" class="btn">Border & Background</p>
-        <p id="_sb" class="btn">Statusbar</p>
-        <p id="_bg" class="btn">Image</p>
-        <p id="_cd" class="btn">Card</p>
-        <p id="_sc" class="btn">Shortcuts</p>
-        <p id="_fp" class="btn">Fingerprint</p>
-        <p id="_hm" class="btn">Hole Mask</p>
-        <p id="_bi" class="btn">Basic Info</p>
+  <div class="pack c">
+    <div id="list" class="g gap8 end">
+      <p id="_bd" class="btn">Border & Background</p>
+      <p id="_sb" class="btn">Statusbar</p>
+      <p id="_bg" class="btn">Image</p>
+      <p id="_cd" class="btn">Card</p>
+      <p id="_sc" class="btn">Shortcuts</p>
+      <p id="_fp" class="btn">Fingerprint</p>
+      <p id="_hm" class="btn">Hole Mask</p>
+      <p id="_bi" class="btn">Basic Info</p>
+    </div>
+    <div class="pages">
+      <div class="page g gap8">
+        <p id="prevBtn" class="btn">Preview</p>
+        <p id="fullscreen" class="btn">Fullscreen</p>
+        <p id="brightUp" class="btn">Lighten</p>
+        <label class="upload btn" for="wallpaper">
+          <span>Upload Image</span>
+          <input type="file" id="wallpaper" accept="image/*">
+        </label>
+        <p id="lock" class="btn actived">Lock</p>
+        <p id="restore" class="btn disabled">Restore</p>
+        <label class="upload btn" for="mockup">
+          <span>Upload Mock</span>
+          <input type="file" id="mockup" accept="image/*">
+        </label>
+        <p id="switchMock" class="btn">Mock</p>
+        <p id="switchCont" class="btn actived">Layout</p>
+        <p id="zoomBtn" class="btn">Zoom</p>
       </div>
-      <div class="pages">
-        <div class="page g">
-          <p id="prevBtn" class="btn">Preview</p>
-          <p id="fullscreen" class="btn">Fullscreen</p>
-          <p id="brightUp" class="btn">Lighten</p>
-          <label class="upload btn" for="wallpaper">
-            <span>Upload Image</span>
-            <input type="file" id="wallpaper" accept="image/*">
-          </label>
-          <p id="lock" class="btn actived">Lock</p>
-          <p id="restore" class="btn disabled">Restore</p>
-          <label class="upload btn" for="mockup">
-            <span>Upload Mock</span>
-            <input type="file" id="mockup" accept="image/*">
-          </label>
-          <p id="switchMock" class="btn">Mock</p>
-          <p id="switchCont" class="btn actived">Layout</p>
-          <p id="zoomBtn" class="btn">Zoom</p>
+      <div class="page">
+        <div class="g gap8">
+          <p id="import" class="btn">Import</p>
+          <p id="export" class="btn">Export</p>
+          <p id="save" class="btn">Save</p>
+          <p id="load" class="btn">Load</p>
         </div>
-        <div class="page">
-          <div class="g">
-            <p id="import" class="btn">Import</p>
-            <p id="export" class="btn">Export</p>
-            <p id="save" class="btn">Save</p>
-            <p id="load" class="btn">Load</p>
+        <div id="saves" class="end hs"></div>
+        <div class="board slide">
+          <div class="toolbar a gap8">
+            <p id="paste" class="btn _s">Paste</p>
+            <p id="copy" class="btn _s">Copy</p>
+            <p id="clear" class="btn _s">Clear</p>
           </div>
-          <div id="saves" class="end hs"></div>
-          <div class="board slide">
-            <div class="toolbar a">
-              <p id="paste" class="btn _s">Paste</p>
-              <p id="copy" class="btn _s">Copy</p>
-              <p id="clear" class="btn _s">Clear</p>
-            </div>
-            <code tabindex="-1" id="codeBox" class="btn" contenteditable spellcheck="false"></code>
-          </div>
+          <code tabindex="-1" id="codeBox" class="btn" contenteditable spellcheck="false"></code>
         </div>
+      </div>
+      <div class="page">
+        <div id="footer" class="c">Papper ver 1.4.5B2</div>
       </div>
     </div>
   </div>
-  <div id="tab" class="c">
+  <div id="tab" class="c gap8">
+    <div id="tabList" class="g" data-active="action">
+      <p id="action" class="btn actived" data-i="0">Actions</p>
+      <p id="data" class="btn" data-i="1">Data</p>
+      <p id="other" class="btn" data-i="2">Others</p>
+    </div>
     <p id="edit" class="btn actived">Edit</p>
-    <p class="btn">Actions</p>
-    <p class="btn">Data</p>
-    <p class="btn">Others</p>
   </div>
   <div id="notif"></div>
-  <div id="footer" class="c end">Papper ver 1.4.5B1</div>
 </body>
 
 </html>

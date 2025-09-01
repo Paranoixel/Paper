@@ -44,6 +44,7 @@ body {
 
 #box {
   position: relative;
+  z-index: 1;
   margin: 0 auto;
   width: 100%;
   aspect-ratio: var(--aspect-ratio);
@@ -308,10 +309,10 @@ body {
 }
 
 #form {
+  --btn-h: 100%;
   padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   overflow-y: auto;
 
   .items {
@@ -332,41 +333,34 @@ body {
       background: #0000;
       border-radius: 8px;
     }
-
-    .btn {
-      height: 100%;
-      flex: 1;
-    }
   }
 }
 
 .pack {
-  overflow: hidden;
-  padding: 8px 16px;
-}
-
-.actions {
   --trans-y: -75px;
   --btn-bg: var(--dark-color);
   --btn-color: #fff;
+  --r: max(4px, var(--bi-radius) - 16px);
+  padding: 8px 16px;
   transition: transform 0.3s;
+}
 
-  #list {
-    height: 68px;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
+#list {
+  height: 68px;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-bottom: 8px;
+}
 
-  .pages {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    overflow: auto;
+.pages {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  overflow: hidden;
 
-    .page {
-      flex: 0 0 100%;
-    }
+  .page {
+    flex: 0 0 100%;
   }
 }
 
@@ -382,9 +376,11 @@ body {
   user-select: none;
   padding: 12px;
   background: var(--btn-bg);
-  border-radius: max(4px, var(--bi-radius) - 16px);
+  border-radius: var(--r);
   color: var(--btn-color);
   transition: border-radius .3s;
+  height: var(--btn-h);
+  line-height: var(--btn-h);
 
   &:active {
     border-radius: 4px;
@@ -398,7 +394,7 @@ body {
 #saves {
   height: 160px;
   overflow-y: auto;
-  margin-bottom: 8px;
+  margin: 8px 0;
 
   &:empty::before {
     display: block;
@@ -429,20 +425,17 @@ body {
   display: flex;
   top: var(--offset);
   right: var(--offset);
-  gap: 8px;
 }
 
 .g {
   display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
 .end {
   padding-bottom: 8px;
-  border-bottom: 1px solid #666;
+  border-bottom: .5px solid #666;
 }
 
 .a {
@@ -464,6 +457,10 @@ body {
   border: .5px solid currentColor;
 }
 
+.gap8 {
+  gap: 8px;
+}
+
 .hs {
   &::-webkit-scrollbar {
     display: none;
@@ -471,6 +468,7 @@ body {
 }
 
 #codeBox {
+  text-align: left;
   display: block;
   min-height: 160px;
   white-space: break-spaces;
@@ -479,19 +477,30 @@ body {
 #tab {
   --p: 10px;
   --r: max(var(--bi-radius) - var(--p), 14px);
+  --btn-h: calc(var(--r) * 2 + 4px);
+  --btn-bg: var(--dark-color);
+  --btn-color: #fff;
   position: fixed;
   inset: auto var(--p) var(--p);
-  z-index: 99;
+  z-index: 20;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  background: var(--dark-color);
-  color: #fff;
-  height: calc(var(--r) * 2);
-  border-radius: var(--r);
   animation: scroll 1 both linear;
   animation-timeline: scroll(root block);
-  animation-range: 0% 20%;
+  animation-range: 0% 30%;
+
+  .g {
+    flex: 10;
+    justify-content: space-evenly;
+    background: var(--btn-bg);
+    border-radius: var(--r);
+  }
+
+  .btn {
+    min-width: var(--btn-h);
+    padding: 0;
+    height: 100%;
+  }
 }
 
 @keyframes scroll {
@@ -505,15 +514,16 @@ body {
 }
 
 #notif {
-  --offset: 16px;
+  --offset: 10px;
   --top: -100px;
   --trans-y: calc(var(--top) - var(--offset));
   position: fixed;
+  z-index: 30;
   bottom: var(--top);
   width: calc(100% - var(--offset) * 2);
   margin: 0 var(--offset);
   padding: 16px 24px;
-  border-radius: max(4px, var(--bi-radius) - var(--offset));
+  border-radius: max(14px, var(--bi-radius) - var(--offset));
   background: rgb(from var(--noti-bg, #fff) r g b/0.6);
   backdrop-filter: blur(8px);
   transition: transform ease-in-out 0.3s;

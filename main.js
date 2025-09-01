@@ -8,6 +8,7 @@ initData()
 const box = $('#box')
 const preview = $('#preview')
 const list = $('#list')
+const tabList = $('#tabList')
 const codeBox = $('#codeBox')
 const saves = $('#saves')
 
@@ -17,6 +18,21 @@ handleClick(list, ({ target: { id } }) => {
   if (id.startsWith('_')) {
     renderConf(id)
   }
+})
+
+handleClick(tabList, ({ target: { id } }) => {
+  if (id === 'tabList') return
+  const last = tabList.dataset.active
+  if (id === last) return
+  $(`#${last}`)?.classList.remove('actived')
+  tabList.setAttribute('data-active', id)
+  $(`#${id}`)?.classList.add('actived')
+  const i = $(`#${id}`).dataset.i
+  const pages = $('.pages')
+  pages.scrollTo({
+    left: (pages.clientWidth + 8) * i,
+    behavior: 'smooth'
+  });
 })
 
 function updateSelected(id = '') {
@@ -57,7 +73,7 @@ handleClick($('#switchCont'), () => {
 }, 1)
 
 handleClick($('#edit'), () => {
-  $('.actions').classList.toggle('slide')
+  $('.pack').classList.toggle('slide')
   if (!isActived($('#edit'))) updateSelected()
 }, 1)
 
