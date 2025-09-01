@@ -60,7 +60,7 @@ handleClick($('#prevBtn'), () => {
 }, 1)
 
 handleClick($('#lock'), () => {
-  $('.main').classList.toggle('unlock')
+  box.classList.toggle('unlock')
   $('#restore').classList.toggle('disabled')
 }, 1)
 
@@ -179,7 +179,7 @@ function initSaves() {
         saves.removeChild(target.parentElement)
         _notif('Deleted')
       }
-      _notif('Comfirm?', { action, type: 1 })
+      _notif('Click here to confirm', { action, type: 1 })
       return
     }
     parseData(localStorage.getItem(id))
@@ -388,7 +388,7 @@ function addTransformSupport() {
   })
 
   bg.addEventListener('pointerdown', ({ pointerId: id, clientX, clientY }) => {
-    if (!$('.main').classList.contains('unlock')) return
+    if (isActived($('#lock'))) return
     bg.setPointerCapture(id)
     pointers.set(id, { id, x: clientX, y: clientY })
     if (pointers.size === 1) {

@@ -28,10 +28,12 @@ body {
   --scale: calc(1 / var(--bi-wallpaper-scale));
   --aspect-ratio: var(--bi-SP-aspect-ratio, 1);
   position: relative;
+  z-index: 1;
   height: calc(100vw / (var(--aspect-ratio)));
   transition: all ease-in-out .3s;
   overflow: hidden;
   transform-origin: bottom center;
+  background: var(--bd-bg-color, var(--dark-color));
 
   &.prev {
     --scale: 1
@@ -44,12 +46,10 @@ body {
 
 #box {
   position: relative;
-  z-index: 1;
   margin: 0 auto;
   width: 100%;
   aspect-ratio: var(--aspect-ratio);
   user-select: none;
-  background: var(--bd-bg-color, var(--dark-color));
   transition: all .3s ease-in-out;
   overflow: hidden;
   transform-origin: bottom center;
@@ -358,6 +358,7 @@ body {
   align-items: flex-start;
   gap: 8px;
   overflow: hidden;
+  margin-bottom: 100px;
 
   .page {
     flex: 0 0 100%;
@@ -371,8 +372,9 @@ body {
 }
 
 .btn {
+  display: flex;
   flex: auto;
-  text-wrap: nowrap;
+  white-space: nowrap;
   user-select: none;
   padding: 12px;
   background: var(--btn-bg);
@@ -380,10 +382,11 @@ body {
   color: var(--btn-color);
   transition: border-radius .3s;
   height: var(--btn-h);
-  line-height: var(--btn-h);
+  align-items: center;
+  justify-content: center;
 
   &:active {
-    border-radius: 4px;
+    border-radius: var(--btn-active-r, 4px);
   }
 }
 
@@ -429,7 +432,6 @@ body {
 
 .g {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -457,8 +459,8 @@ body {
   border: .5px solid currentColor;
 }
 
-.gap8 {
-  gap: 8px;
+.gap {
+  gap: var(--gap, 8px);
 }
 
 .hs {
@@ -468,7 +470,6 @@ body {
 }
 
 #codeBox {
-  text-align: left;
   display: block;
   min-height: 160px;
   white-space: break-spaces;
@@ -476,9 +477,9 @@ body {
 
 #tab {
   --p: 10px;
-  --r: max(var(--bi-radius) - var(--p), 14px);
-  --btn-h: calc(var(--r) * 2 + 4px);
-  --btn-bg: var(--dark-color);
+  --r1: max(var(--bi-radius) - var(--p), 14px);
+  --r: 8px;
+  --btn-h: calc(var(--r1) * 2 + 4px);
   --btn-color: #fff;
   position: fixed;
   inset: auto var(--p) var(--p);
@@ -492,14 +493,32 @@ body {
   .g {
     flex: 10;
     justify-content: space-evenly;
-    background: var(--btn-bg);
     border-radius: var(--r);
   }
 
+  #tabList {
+    --gap: 2px;
+    --btn-bg: #2d2bcc;
+
+    :first-child {
+      border-top-left-radius: var(--r1);
+      border-bottom-left-radius: var(--r1);
+    }
+
+    :last-child {
+      border-top-right-radius: var(--r1);
+      border-bottom-right-radius: var(--r1);
+    }
+  }
+
   .btn {
-    min-width: var(--btn-h);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
     padding: 0;
-    height: 100%;
+  }
+
+  #edit {
+    --r: var(--r1);
+    --btn-bg: #c0bfea;
   }
 }
 
