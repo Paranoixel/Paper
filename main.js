@@ -5,6 +5,10 @@ const $curConf = {}
 const $palette = {}
 initData()
 
+$('#edit').addEventListener('transitionend', () => {
+  _stopSplash()
+}, { once: true })
+
 const box = $('#box')
 const preview = $('#preview')
 const list = $('#list')
@@ -250,6 +254,7 @@ function renderHandler(data, type) {
       textContent: key.replace(`${type}-`, '')
     })
     const input = $ce('input', {
+      className: 'r',
       onblur: ({ target }) => {
         _update(key, target.value)
       },
@@ -315,7 +320,7 @@ async function _notif(t, { type = 0, action } = {}) {
   })
   if (timer) await _t()
   notif.textContent = t
-  notif.className = `${TYPES[type]} c`
+  notif.className = `${TYPES[type]} c r`
   notif.classList.add('slide')
   timer = setTimeout(_done, 3e3)
   function _done() {
@@ -435,4 +440,13 @@ function addTransformSupport() {
       lastPointer = null
     }
   })
+}
+
+function _stopSplash() {
+  const splash = $('#splash');
+  splash.ontransitionend = () => {
+    splash.remove();
+  }
+  document.body.style.overflow = '';
+  splash.style.opacity = 0;
 }

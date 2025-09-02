@@ -15,10 +15,16 @@ div {
   --dark-color: #212121;
 }
 
+@property --r {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 1000px;
+}
+
 body {
   font-family: system-ui;
   overscroll-behavior-y: contain;
-  background: #E0E8FF;
+  background: var(--surfaceContainer);
   width: 100%;
   height: 100vh;
   overflow-y: auto;
@@ -99,11 +105,11 @@ body {
 #container,
 #mock,
 #preview {
+  --r: var(--bi-radius);
   top: 0;
   left: 0;
   width: 100%;
   aspect-ratio: var(--aspect-ratio);
-  border-radius: var(--bi-radius);
   transform: scale(var(--scale));
   transition: all ease-in-out .3s;
 }
@@ -152,7 +158,6 @@ body {
     width: var(--bi-hole-size);
     aspect-ratio: 1;
     background: #000;
-    border-radius: 100%;
   }
 
   .psb {
@@ -186,26 +191,26 @@ body {
 }
 
 #bd {
+  --r: var(--bi-radius);
   width: 100%;
   height: 100%;
   z-index: var(--bd-z-index);
   border: var(--bd-width) solid var(--bd-color);
-  border-radius: var(--bi-radius);
 }
 
 #hm {
+  --r: var(--hm-radius);
   z-index: calc(var(--sb-z-index) + 1);
   top: calc(var(--bi-hole-size) / 2 + var(--bi-hole-top) - var(--hm-hight) / 2);
   left: calc(50% - var(--hm-width) / 2);
   width: var(--hm-width);
   height: var(--hm-hight);
   background: var(--hm-bg-color);
-  border-radius: var(--hm-radius);
 }
 
 #bg {
+  --r: var(--bg-radius);
   opacity: var(--bg-opacity);
-  border-radius: var(--bg-radius);
   height: var(--bg-height);
   left: var(--bg-offset-x);
   right: var(--bg-offset-x);
@@ -223,8 +228,8 @@ body {
 }
 
 #cd {
+  --r: var(--cd-radius);
   opacity: var(--cd-opacity);
-  border-radius: var(--cd-radius);
   height: var(--cd-height);
   left: var(--cd-offset-x);
   right: var(--cd-offset-x);
@@ -235,8 +240,8 @@ body {
 
 #sb,
 .psb {
+  --r: var(--sb-radius);
   opacity: var(--sb-opacity);
-  border-radius: var(--sb-radius);
   height: var(--sb-height);
   left: var(--sb-offset-x);
   right: var(--sb-offset-x);
@@ -249,7 +254,6 @@ body {
 .pfp,
 #fp {
   opacity: var(--fp-opacity);
-  border-radius: 100%;
   height: var(--fp-size);
   aspect-ratio: 1;
   bottom: var(--fp-bottom);
@@ -264,7 +268,6 @@ body {
   bottom: var(--sc-bottom);
   width: var(--sc-size);
   aspect-ratio: 1;
-  border-radius: 100%;
   background: var(--sc-bg-color);
   backdrop-filter: blur(var(--sc-blur));
   left: var(--sc-offset-x);
@@ -277,12 +280,12 @@ body {
 
 #console {
   --trans-y: -30vh;
+  --r: 12px;
   display: flex;
   flex-direction: column;
   position: absolute;
   z-index: 10;
   bottom: var(--trans-y);
-  border-radius: var(--bi-radius) var(--bi-radius) 0 0;
   width: 100%;
   height: calc(-1 * var(--trans-y));
   padding: max(var(--bi-radius) / 3, 16px) 16px;
@@ -292,7 +295,6 @@ body {
   &.swap {
     --trans-y: 40vh;
     bottom: unset;
-    border-radius: 0 0 var(--bi-radius) var(--bi-radius);
     top: calc(-1 * var(--trans-y));
     height: var(--trans-y);
 
@@ -326,12 +328,12 @@ body {
     }
 
     input {
+      --r: 12px;
       height: 32px;
       width: 100px;
       flex: 5;
       text-indent: 8px;
       background: #0000;
-      border-radius: 8px;
     }
   }
 }
@@ -340,7 +342,6 @@ body {
   --trans-y: -75px;
   --btn-bg: var(--dark-color);
   --btn-color: #fff;
-  --r: max(4px, var(--bi-radius) - 16px);
   padding: 8px 16px;
   transition: transform 0.3s;
 }
@@ -372,21 +373,21 @@ body {
 }
 
 .btn {
+  --r: 16px;
   display: flex;
   flex: auto;
   white-space: nowrap;
   user-select: none;
   padding: 12px;
   background: var(--btn-bg);
-  border-radius: var(--r);
   color: var(--btn-color);
-  transition: border-radius .3s;
+  transition: all ease-in-out .3s;
   height: var(--btn-h);
   align-items: center;
   justify-content: center;
 
   &:active {
-    border-radius: var(--btn-active-r, 4px);
+    --r: var(--btn-active-r, 8px);
   }
 }
 
@@ -424,7 +425,7 @@ body {
 }
 
 .toolbar {
-  --offset: max(var(--bi-radius) / 4, 8px);
+  --offset: 8px;
   display: flex;
   top: var(--offset);
   right: var(--offset);
@@ -448,14 +449,20 @@ body {
   font-weight: 500;
 }
 
+.r,
+.btn {
+  border-radius: var(--r);
+}
+
 .x {
   line-height: 28px;
   font-size: 28px;
 }
 
 ._s {
+  --r: 12px;
+  --btn-active-r: 4px;
   padding: 4px 8px;
-  border-radius: 99px;
   border: .5px solid currentColor;
 }
 
@@ -471,14 +478,13 @@ body {
 
 #codeBox {
   display: block;
-  min-height: 160px;
+  min-height: 200px;
   white-space: break-spaces;
 }
 
 #tab {
   --p: 10px;
   --r1: max(var(--bi-radius) - var(--p), 14px);
-  --r: 8px;
   --btn-h: calc(var(--r1) * 2 + 4px);
   --btn-color: #fff;
   position: fixed;
@@ -493,7 +499,6 @@ body {
   .g {
     flex: 10;
     justify-content: space-evenly;
-    border-radius: var(--r);
   }
 
   #tabList {
@@ -536,24 +541,27 @@ body {
   --offset: 10px;
   --top: -100px;
   --trans-y: calc(var(--top) - var(--offset));
+  --r: max(14px, var(--bi-radius) - var(--offset));
   position: fixed;
   z-index: 30;
   bottom: var(--top);
   width: calc(100% - var(--offset) * 2);
   margin: 0 var(--offset);
   padding: 16px 24px;
-  border-radius: max(14px, var(--bi-radius) - var(--offset));
-  background: rgb(from var(--noti-bg, #fff) r g b/0.6);
+  color: var(--noti-color, var(--onSurface));
+  background: rgb(from var(--noti-bg, var(--surfaceContainerHigh)) r g b/0.8);
   backdrop-filter: blur(8px);
   transition: transform ease-in-out 0.3s;
 }
 
 .tip {
-  --noti-bg: var(--main-color);
+  --noti-bg: var(--tertiary);
+  --noti-color: var(--onTertiary);
 }
 
 .err {
-  --noti-bg: #ff4646;
+  --noti-color: var(--onError);
+  --noti-bg: var(--error);
 }
 
 .slide {

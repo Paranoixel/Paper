@@ -5,40 +5,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Papper</title>
+  <link rel="stylesheet" href="./color.css">
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./main.js" defer></script>
 </head>
 
-<body class="hs">
+<style>
+  #splash {
+    position: fixed;
+    inset: 0;
+    background-color: #f6f6f6;
+    font-size: 64px;
+    text-align: center;
+    line-height: 100vh;
+    z-index: 40;
+    transition: opacity ease-in-out .4s;
+  }
+</style>
+
+<body style="overflow: hidden;" class="hs">
+  <div id="splash">Papper</div>
   <div class="main">
     <div id="box">
-      <div id="mock" class="a hide"></div>
-      <div id="container" class="a">
-        <div id="bd" class="a"></div>
-        <div id="sb" class="a"></div>
-        <div id="hm" class="a"></div>
-        <div id="bg" class="a">
+      <div id="mock" class="a r hide"></div>
+      <div id="container" class="a r">
+        <div id="bd" class="a r"></div>
+        <div id="sb" class="a r"></div>
+        <div id="hm" class="a r"></div>
+        <div id="bg" class="a r">
           <div class="img"></div>
         </div>
-        <div id="cd" class="a"></div>
-        <div id="fp" class="a"></div>
-        <div id="sc" class="a shortcuts"></div>
-        <div class="a shortcuts other"></div>
+        <div id="cd" class="a r"></div>
+        <div id="fp" class="a r"></div>
+        <div id="sc" class="a r shortcuts"></div>
+        <div class="a r shortcuts other"></div>
       </div>
-      <div id="preview" class='a hide'>
-        <div class="a psb">
+      <div id="preview" class='a r hide'>
+        <div class="a r psb">
           <div>Papeer</div>
           <div>oO EED</div>
         </div>
-        <div class="ptime b c">2002</div>
+        <div class="b c ptime">2002</div>
         <div class="pdata">Mon, Aug 11 ☀ 29℃</div>
-        <div class="a pfp">❖</div>
-        <div class="a psc">©</div>
-        <div class="a psc other">®</div>
-        <div class="a hole"></div>
+        <div class="a r pfp">❖</div>
+        <div class="a r psc">©</div>
+        <div class="a r psc other">®</div>
+        <div class="a hole r"></div>
       </div>
     </div>
-    <div id="console" class="a">
+    <div id="console" class="a r">
       <p id="swapBtn" class="b c end">Swap</p>
       <div id="form" class="gap"></div>
     </div>
@@ -91,7 +106,7 @@
         </div>
       </div>
       <div class="page">
-        <div id="footer" class="c">Papper ver 1.4.5B3</div>
+        <div id="footer" class="c">Papper ver 1.4.5B4</div>
       </div>
     </div>
   </div>
