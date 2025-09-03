@@ -78,6 +78,10 @@ handleClick($('#edit'), () => {
   if (!isActived($('#edit'))) updateSelected()
 }, 1)
 
+handleClick($('#testBtn'), () => {
+  $('.pack').classList.toggle('test')
+}, 1)
+
 handleClick($('#switchMock'), () => {
   $('#mock').classList.toggle('hide')
 }, 1)
@@ -317,7 +321,7 @@ async function _notif(t, { type = 0, action } = {}) {
   })
   if (timer) await _t()
   notif.textContent = t
-  notif.className = `${TYPES[type]} c r`
+  notif.className = `${TYPES[type]} r`
   notif.classList.add('slide')
   timer = setTimeout(_done, 3e3)
   function _done() {

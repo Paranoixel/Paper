@@ -91,7 +91,7 @@ body {
 }
 
 .disabled {
-  filter: brightness(.75);
+  filter: brightness(.8);
   pointer-events: none;
 }
 
@@ -285,7 +285,7 @@ body {
   bottom: var(--trans-y);
   width: 100%;
   height: calc(-1 * var(--trans-y));
-  padding: max(var(--bi-radius) / 3, 16px) 16px;
+  padding: 16px;
   background: #fffc;
   transition: transform ease-in-out 0.3s;
 
@@ -336,8 +336,15 @@ body {
 }
 
 .pack {
-  --trans-y: -67px;
+  --trans-y: -68px;
   transition: transform ease-in-out 0.3s;
+  padding-top: 8px;
+
+}
+
+.test {
+  border-radius: var(--bi-radius);
+  outline: 99px solid red;
 }
 
 #list {
@@ -347,7 +354,7 @@ body {
   align-items: center;
   flex-wrap: nowrap;
   overflow-x: auto;
-  margin: 8px;
+  margin: 0 8px 8px;
   background: var(--secondaryContainer);
 
   .label {
@@ -396,7 +403,7 @@ body {
   padding: 12px;
   background: var(--btn-bg);
   color: var(--btn-color);
-  transition: all ease .2s;
+  transition: all ease .3s;
   height: var(--btn-h);
   align-items: center;
   justify-content: center;
@@ -496,54 +503,61 @@ body {
   --btn-color: var(--onSecondary);
   display: block;
   min-height: 200px;
-  margin-bottom: 100px;
   white-space: break-spaces;
+  margin-bottom: 60px;
+}
+
+#tab,
+#notif {
+  --offset: max((var(--bi-radius) - 16px) / 2, 10px);
+  --dr: max(var(--bi-radius) - var(--offset), 14px);
+  --h: max(var(--dr) * 2, 48px);
+  position: fixed;
+  display: flex;
+  align-items: center;
 }
 
 #tab {
-  --p: 10px;
-  --r1: max(var(--bi-radius) - var(--p), 14px);
-  --btn-h: calc(var(--r1) * 2 + 4px);
-  position: fixed;
-  inset: auto var(--p) var(--p);
+  inset: auto var(--offset) var(--offset);
   z-index: 20;
-  display: flex;
-  align-items: center;
   animation: scroll 1 both linear;
   animation-timeline: scroll(root block);
   animation-range: 0% 30%;
 
-  .g {
-    flex: 10;
-    justify-content: space-evenly;
-  }
-
-  #tabList {
-    --gap: 2px;
-    --btn-bg: var(--primary);
-    --btn-color: var(--onPrimary);
-    margin-right: 10px;
-
-    :first-child {
-      border-top-left-radius: var(--r1);
-      border-bottom-left-radius: var(--r1);
-    }
-
-    :last-child {
-      border-top-right-radius: var(--r1);
-      border-bottom-right-radius: var(--r1);
-    }
-  }
-
   .btn {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
     padding: 0;
   }
 
+  #tabList {
+    --gap: 8px;
+    --r: var(--dr);
+    --btn-color: var(--onPrimaryContainer);
+    background: var(--primaryContainer);
+    height: var(--h);
+    padding: var(--gap);
+    margin-right: 10px;
+
+    &.g {
+      flex: 18;
+    }
+
+    .actived {
+      --r: calc(var(--dr) - var(--gap));
+      --btn-bg: var(--primary);
+      color: var(--onPrimary);
+    }
+  }
+
+  .fab {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+  }
+
   #edit {
-    --r: var(--r1);
+    --r: var(--dr);
     --btn-bg: var(--tertiary);
     --btn-color: var(--onTertiary);
+    height: var(--h);
+    min-width: var(--h);
   }
 }
 
@@ -558,15 +572,13 @@ body {
 }
 
 #notif {
-  --offset: 10px;
+  --r: var(--dr);
   --top: -100px;
   --trans-y: calc(var(--top) - var(--offset));
-  --r: max(14px, var(--bi-radius) - var(--offset));
-  position: fixed;
+  justify-content: center;
+  inset: auto var(--offset) var(--top);
   z-index: 30;
-  bottom: var(--top);
-  width: calc(100% - var(--offset) * 2);
-  margin: 0 var(--offset);
+  min-height: var(--h);
   padding: 16px 24px;
   color: var(--noti-color, var(--onSurface));
   background: rgb(from var(--noti-bg, var(--surfaceContainerHigh)) r g b/0.8);
