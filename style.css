@@ -12,7 +12,6 @@ div {
 
 :root {
   --main-color: #568cff;
-  --dark-color: #212121;
 }
 
 @property --r {
@@ -38,8 +37,7 @@ body {
   height: calc(100vw / (var(--aspect-ratio)));
   transition: all ease-in-out .3s;
   overflow: hidden;
-  transform-origin: bottom center;
-  background: var(--bd-bg-color, var(--dark-color));
+  background: var(--bd-bg-color);
 
   &.prev {
     --scale: 1
@@ -76,7 +74,6 @@ body {
 .ani {
   animation: zoom 1 both linear;
   animation-timeline: scroll(root block);
-  animation-range: 5% 70%;
 }
 
 @keyframes zoom {
@@ -85,7 +82,7 @@ body {
   }
 
   to {
-    transform: scale(.4);
+    transform: scale(.5);
   }
 }
 
@@ -94,7 +91,7 @@ body {
 }
 
 .disabled {
-  --btn-color: #aaa;
+  filter: brightness(.75);
   pointer-events: none;
 }
 
@@ -280,7 +277,7 @@ body {
 
 #console {
   --trans-y: -30vh;
-  --r: 12px;
+  --r: 16px;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -339,30 +336,48 @@ body {
 }
 
 .pack {
-  --trans-y: -75px;
-  --btn-bg: var(--dark-color);
-  --btn-color: #fff;
-  padding: 8px 16px;
-  transition: transform 0.3s;
+  --trans-y: -67px;
+  transition: transform ease-in-out 0.3s;
 }
 
 #list {
-  height: 68px;
+  --r: 24px;
+  height: 60px;
+  padding: 8px;
   align-items: center;
   flex-wrap: nowrap;
   overflow-x: auto;
-  margin-bottom: 8px;
+  margin: 8px;
+  background: var(--secondaryContainer);
+
+  .label {
+    --btn-h: 100%;
+    --btn-bg: #0000;
+    --btn-color: var(--onSecondaryContainer);
+    --b-color: var(--btn-color);
+    border: 1px solid var(--b-color);
+
+    &.actived {
+      --r: 100px;
+      --btn-bg: var(--secondary);
+      --b-color: var(--btn-btn-bg);
+      color: var(--onSecondary);
+    }
+  }
 }
 
 .pages {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
   overflow: hidden;
-  margin-bottom: 100px;
 
   .page {
+    --btn-bg: var(--secondaryContainer);
+    --btn-color: var(--onSecondaryContainer);
+    max-height: 40vh;
+    padding: 0 16px;
     flex: 0 0 100%;
+    overflow-y: auto;
   }
 }
 
@@ -381,7 +396,7 @@ body {
   padding: 12px;
   background: var(--btn-bg);
   color: var(--btn-color);
-  transition: all ease-in-out .3s;
+  transition: all ease .2s;
   height: var(--btn-h);
   align-items: center;
   justify-content: center;
@@ -389,10 +404,11 @@ body {
   &:active {
     --r: var(--btn-active-r, 8px);
   }
+
 }
 
 .actived {
-  --btn-color: var(--main-color);
+  color: var(--main-color);
 }
 
 #saves {
@@ -437,7 +453,6 @@ body {
 }
 
 .end {
-  padding-bottom: 8px;
   border-bottom: .5px solid #666;
 }
 
@@ -463,7 +478,7 @@ body {
   --r: 12px;
   --btn-active-r: 4px;
   padding: 4px 8px;
-  border: .5px solid currentColor;
+  border: 1px solid currentColor;
 }
 
 .gap {
@@ -477,8 +492,11 @@ body {
 }
 
 #codeBox {
+  --btn-bg: var(--secondary);
+  --btn-color: var(--onSecondary);
   display: block;
   min-height: 200px;
+  margin-bottom: 100px;
   white-space: break-spaces;
 }
 
@@ -486,7 +504,6 @@ body {
   --p: 10px;
   --r1: max(var(--bi-radius) - var(--p), 14px);
   --btn-h: calc(var(--r1) * 2 + 4px);
-  --btn-color: #fff;
   position: fixed;
   inset: auto var(--p) var(--p);
   z-index: 20;
@@ -503,7 +520,9 @@ body {
 
   #tabList {
     --gap: 2px;
-    --btn-bg: #2d2bcc;
+    --btn-bg: var(--primary);
+    --btn-color: var(--onPrimary);
+    margin-right: 10px;
 
     :first-child {
       border-top-left-radius: var(--r1);
@@ -523,7 +542,8 @@ body {
 
   #edit {
     --r: var(--r1);
-    --btn-bg: #c0bfea;
+    --btn-bg: var(--tertiary);
+    --btn-color: var(--onTertiary);
   }
 }
 

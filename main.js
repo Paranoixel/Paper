@@ -4,10 +4,7 @@ const pf = '--'
 const $curConf = {}
 const $palette = {}
 initData()
-
-$('#edit').addEventListener('transitionend', () => {
-  _stopSplash()
-}, { once: true })
+_stopSplash()
 
 const box = $('#box')
 const preview = $('#preview')
@@ -34,9 +31,9 @@ handleClick(tabList, ({ target: { id } }) => {
   const i = $(`#${id}`).dataset.i
   const pages = $('.pages')
   pages.scrollTo({
-    left: (pages.clientWidth + 8) * i,
+    left: pages.clientWidth * i,
     behavior: 'smooth'
-  });
+  })
 })
 
 function updateSelected(id = '') {
@@ -167,11 +164,11 @@ function renderConf(id) {
 
 function initSaves() {
   const frag = document.createDocumentFragment()
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (!key.startsWith($spf)) continue
-    const r = renderRecord(key)
-    frag.appendChild(r)
+  for (const key of Object.keys(localStorage)) {
+    if (key.startsWith($spf)) {
+      const r = renderRecord(key)
+      frag.appendChild(r)
+    }
   }
   saves.appendChild(frag)
   handleClick(saves, ({ target, currentTarget }) => {
@@ -271,7 +268,7 @@ function renderHandler(data, type) {
     if (isColor) {
       const color = $ce('p', {
         className: 'btn _s',
-        style: `--btn-bg: var(${pf}${key});`,
+        style: `--btn-bg: var(${pf}${key})`,
         onclick: async () => {
           // show dialog
           const t = await paste()
@@ -325,7 +322,7 @@ async function _notif(t, { type = 0, action } = {}) {
   timer = setTimeout(_done, 3e3)
   function _done() {
     notif.classList.remove('slide')
-    timer = null;
+    timer = null
   }
 }
 
@@ -434,8 +431,8 @@ function addTransformSupport() {
     pointers.delete(id)
     try { bg.releasePointerCapture(id) } catch (error) { }
     if (pointers.size === 1) {
-      const remaining = Array.from(pointers.values())[0];
-      lastPanPointer = { x: remaining.x, y: remaining.y };
+      const remaining = Array.from(pointers.values())[0]
+      lastPanPointer = { x: remaining.x, y: remaining.y }
     } else {
       lastPointer = null
     }
@@ -443,10 +440,11 @@ function addTransformSupport() {
 }
 
 function _stopSplash() {
-  const splash = $('#splash');
-  splash.ontransitionend = () => {
-    splash.remove();
+  const fn = () => {
+    const splash = $('#splash')
+    splash.ontransitionend = () => splash.remove()
+    document.body.style.overflow = ''
+    splash.style.opacity = 0
   }
-  document.body.style.overflow = '';
-  splash.style.opacity = 0;
+  document.documentElement.addEventListener('transitionend', fn, { once: true })
 }
