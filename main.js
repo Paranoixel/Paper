@@ -240,7 +240,7 @@ function renderRecord(key) {
   const n = c[NAME] || 'Untitled'
   const div = $ce('div', {
     className: 'cc record',
-    innerHTML: `<p id="${key}">[${n}] ${ts}</p><p id="del_${key}"><i class="material-symbols-outlined">delete</i></p>`
+    innerHTML: `<p id="${key}">[${n}] ${ts}</p><p id="del_${key}"><i class="ic">delete</i></p>`
   })
   return div
 }

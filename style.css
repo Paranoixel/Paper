@@ -10,21 +10,46 @@ div {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'icon';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url(./fonts/font.woff2) format('woff2');
+}
+
+.ic {
+  font-family: 'icon';
+  font-weight: normal;
+  font-style: normal;
+  font-size: var(--i-size, 24px);
+  line-height: 1;
+  letter-spacing: normal;
+  display: inline-block;
+  white-space: nowrap;
+  pointer-events: none;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 22;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
 :root {
   --main-color: #568cff;
+  overflow-y: hidden;
 }
 
 @property --r {
   syntax: '<length>';
   inherits: false;
-  initial-value: 1000px;
+  initial-value: 300px;
 }
 
 body {
   font-family: system-ui;
-  overscroll-behavior-y: contain;
+  scroll-timeline: --page block;
+  /* overscroll-behavior-y: contain; */
   background: var(--surfaceContainer);
-  width: 100%;
+  color: var(--onSurface);
+  width: 100vw;
   height: 100vh;
   overflow-y: auto;
 }
@@ -69,7 +94,7 @@ body {
 
 .ani {
   animation: zoom 1 both linear;
-  animation-timeline: scroll(root block);
+  animation-timeline: --page;
 }
 
 @keyframes zoom {
@@ -78,7 +103,7 @@ body {
   }
 
   to {
-    transform: scale(.5);
+    transform: scale(.44);
   }
 }
 
@@ -286,7 +311,7 @@ body {
   width: 100%;
   height: calc(-1 * var(--trans-y));
   padding: 16px;
-  background: #fffc;
+  background: rgb(from var(--surfaceContainerHighest) r g b /.8);
   transition: transform ease-in-out 0.3s;
 
   &.swap {
@@ -342,7 +367,7 @@ body {
 
 .test {
   border-radius: var(--bi-radius);
-  outline: 99px solid red;
+  outline: 99px solid green;
 }
 
 #list {
@@ -354,6 +379,9 @@ body {
   overflow-x: auto;
   margin: 0 8px 8px;
   background: var(--secondaryContainer);
+  /* mask-image: linear-gradient(to right, #0001 0, #000 20px, #000 calc(100% - 20px), #0001 100%); */
+  /* mask-repeat: no-repeat; */
+  /* mask-size: 100% 100%; */
 
   .label {
     --btn-h: 100%;
@@ -365,7 +393,7 @@ body {
     &.actived {
       --r: 100px;
       --btn-bg: var(--secondary);
-      --b-color: var(--btn-btn-bg);
+      --b-color: var(--btn-bg);
       color: var(--onSecondary);
     }
   }
@@ -374,24 +402,22 @@ body {
 .pages {
   display: flex;
   align-items: flex-start;
-  overflow: hidden;
+  overflow-x: hidden;
+  /* scroll-snap-type: x mandatory; */
 
   .page {
     --btn-bg: var(--secondaryContainer);
     --btn-color: var(--onSecondaryContainer);
     padding: 0 16px;
     flex: 0 0 100%;
+    /* scroll-snap-align: start; */
   }
 }
 
 .combine {
-  --gap: 12px;
-  padding: var(--gap);
-  background: var(--btn-bg);
-  color: var(--btn-color);
-  border-radius: 16px;
+  --gap: 4px;
 
-  .btn {
+  :nth-child(2) {
     --r: 100px;
     --btn-bg: var(--secondary);
     --btn-color: var(--onSecondary);
@@ -421,18 +447,15 @@ body {
   &:active {
     --r: var(--btn-active-r, 8px);
   }
-
-}
-
-#preview,
-.actived {
-  i {
-    font-variation-settings: 'FILL' 1, 'opsz' 20;
-  }
 }
 
 .actived {
+  font-weight: 500;
   color: var(--main-color);
+
+  i {
+    font-variation-settings: 'FILL' 1;
+  }
 }
 
 #saves {
@@ -480,7 +503,7 @@ body {
 }
 
 .end {
-  border-bottom: .5px solid #666;
+  border-bottom: .5px solid var(--outline);
 }
 
 .a {
@@ -546,7 +569,7 @@ body {
   inset: auto var(--offset) var(--offset);
   z-index: 20;
   animation: scroll 1 both linear;
-  animation-timeline: scroll(root block);
+  animation-timeline: --page;
   animation-range: 0% 30%;
 
   .btn {

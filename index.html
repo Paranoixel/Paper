@@ -9,16 +9,16 @@
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./main.js" defer></script>
 </head>
-<script>
+<!-- <script>
   const link = document.createElement('link'); link.rel = 'stylesheet'; const href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=';
   const icons = [
     'edit', 'settings', 'data_table', 'home', 'content_paste_go', 'content_copy',
     'ink_eraser', 'delete', 'swap_vert', 'android_cell_4_bar', 'battery_android_full', 'fingerprint',
-    'photo_camera', 'input_circle', 'output_circle', 'save', 'folder',
-    'reset_focus', 'lock', 'add_photo_alternate', 'backlight_high', 'fullscreen', 'preview'
+    'photo_camera', 'input_circle', 'output_circle', 'save', 'folder', 'hide_image', 'rounded_corner',
+    'reset_focus', 'lock', 'add_photo_alternate', 'backlight_high', 'fullscreen', 'preview','zoom_in_map'
   ];
   const p = icons.sort().join(','); link.href = href + p; document.head.appendChild(link);
-</script>
+</script> -->
 
 <style>
   #splash {
@@ -30,12 +30,6 @@
     line-height: 100vh;
     z-index: 40;
     transition: opacity ease-in-out .4s;
-  }
-
-  .material-symbols-outlined {
-    font-size: var(--i-size, 24px) !important;
-    pointer-events: none;
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 22
   }
 </style>
 
@@ -60,20 +54,20 @@
         <div class="a r cc psb">
           <div>Papeer</div>
           <div class="cc gap">
-            <i class="material-symbols-outlined">android_cell_4_bar</i>
-            <i class="batt material-symbols-outlined">battery_android_full</i>
+            <i class="ic">android_cell_4_bar</i>
+            <i class="batt ic">battery_android_full</i>
           </div>
         </div>
         <div class="b c ptime">2002</div>
         <div class="pdata">Mon, Aug 11 ☀ 29℃</div>
-        <div class="a r pfp"><i class="material-symbols-outlined">fingerprint</i></div>
-        <div class="a r psc"><i class="material-symbols-outlined">home</i></div>
-        <div class="a r psc other"><i class="material-symbols-outlined">photo_camera</i></div>
+        <div class="a r pfp"><i class="ic">fingerprint</i></div>
+        <div class="a r psc"><i class="ic">home</i></div>
+        <div class="a r psc other"><i class="ic">photo_camera</i></div>
         <div class="a hole r"></div>
       </div>
     </div>
     <div id="console" class="a r">
-      <p id="swapBtn" class="b c end"><i class="material-symbols-outlined">swap_vert</i></p>
+      <p id="swapBtn" class="b c end"><i class="ic">swap_vert</i></p>
       <div id="form" class="gap"></div>
     </div>
   </div>
@@ -91,55 +85,58 @@
     <div class="pages">
       <div class="page hs">
         <div class="g gap">
-          <p id="import" class="btn"><i class="material-symbols-outlined">input_circle</i></p>
-          <p id="export" class="btn"><i class="material-symbols-outlined">output_circle</i></p>
-          <p id="save" class="btn"><i class="material-symbols-outlined">save</i></p>
-          <p id="load" class="btn"><i class="material-symbols-outlined">folder</i></p>
+          <p id="import" class="btn"><i class="ic">input_circle</i></p>
+          <p id="export" class="btn"><i class="ic">output_circle</i></p>
+          <p id="save" class="btn"><i class="ic">save</i></p>
+          <p id="load" class="btn"><i class="ic">folder</i></p>
         </div>
         <div id="saves" class="end hs"></div>
         <div class="board slide">
           <div class="toolbar a gap">
-            <p id="paste" class="btn _s"><i class="material-symbols-outlined">content_paste_go</i></p>
-            <p id="copy" class="btn _s"><i class="material-symbols-outlined">content_copy</i></p>
-            <p id="clear" class="btn _s"><i class="material-symbols-outlined">ink_eraser</i></p>
+            <p id="paste" class="btn _s"><i class="ic">content_paste_go</i></p>
+            <p id="copy" class="btn _s"><i class="ic">content_copy</i></p>
+            <p id="clear" class="btn _s"><i class="ic">ink_eraser</i></p>
           </div>
           <code tabindex="-1" id="codeBox" class="btn" contenteditable spellcheck="false"></code>
         </div>
       </div>
       <div class="page g gap">
-        <p id="prevBtn" class="btn"><i class="material-symbols-outlined">preview</i></p>
-        <p id="fullscreen" class="btn"><i class="material-symbols-outlined">fullscreen</i></p>
-        <p id="brightUp" class="btn"><i class="material-symbols-outlined">backlight_high</i></p>
-        <div class="g gap combine cc">
-          <p>Image</p>
-          <label class="upload btn" for="wallpaper">
-            <i class="material-symbols-outlined">add_photo_alternate</i>
+        <p id="prevBtn" class="btn gap"><i class="ic">preview</i>Preview</p>
+        <p id="fullscreen" class="btn gap"><i class="ic">fullscreen</i>Fullscreen</p>
+        <p id="brightUp" class="btn"><i class="ic">backlight_high</i></p>
+        <div class="g gap r combine cc">
+          <label class="upload btn gap" for="wallpaper">
+            <i class="ic">add_photo_alternate</i>
+            <p>Image</p>
             <input type="file" id="wallpaper" accept="image/*">
           </label>
-          <p id="lock" class="btn actived"><i class="material-symbols-outlined">lock</i></p>
-          <p id="restore" class="btn disabled"><i class="material-symbols-outlined">reset_focus</i></p>
+          <p id="lock" class="btn actived"><i class="ic">lock</i></p>
+          <p id="restore" class="btn disabled"><i class="ic">reset_focus</i></p>
         </div>
+        <p id="zoomBtn" class="btn gap"><i class="ic">zoom_in_map</i>Zoom</p>
       </div>
       <div class="page g gap">
-        <label class="upload btn" for="mockup">
-          <span>Upload Mock</span>
-          <input type="file" id="mockup" accept="image/*">
-        </label>
-        <p id="switchMock" class="btn">Mock</p>
-        <p id="switchCont" class="btn actived">Layout</p>
-        <p id="zoomBtn" class="btn">Auto Zoom</p>
-        <p id="testBtn" class="btn">Show Radius</p>
+        <div class="g gap r combine cc">
+          <label class="upload btn gap" for="mockup">
+            <i class="ic">add_photo_alternate</i>
+            <p>Mock</p>
+            <input type="file" id="mockup" accept="image/*">
+          </label>
+          <p id="switchMock" class="btn actived"><i class="ic">hide_image</i></p>
+        </div>
+        <p id="switchCont" class="btn gap"><i class="ic">hide_image</i>Layout</p>
+        <p id="testBtn" class="btn"><i class="ic">rounded_corner</i></p>
         <p id="footer" class="btn">Papper ver 1.4.9</p>
       </div>
     </div>
   </div>
   <div id="tab">
     <div id="tabList" class="g r fab gap">
-      <p id="data" class="btn" data-i="0"><i class="material-symbols-outlined">data_table</i></p>
-      <p id="home" class="btn" data-i="1"><i class="material-symbols-outlined">home</i></p>
-      <p id="other" class="btn" data-i="2"><i class="material-symbols-outlined">settings</i></p>
+      <p id="data" class="btn" data-i="0"><i class="ic">data_table</i></p>
+      <p id="home" class="btn" data-i="1"><i class="ic">home</i></p>
+      <p id="other" class="btn" data-i="2"><i class="ic">settings</i></p>
     </div>
-    <p id="edit" class="a btn fab actived"><i class="material-symbols-outlined">edit</i></p>
+    <p id="edit" class="a btn fab actived"><i class="ic">edit</i></p>
   </div>
   <div id="notif"></div>
 </body>
