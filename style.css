@@ -44,10 +44,6 @@ body {
   }
 }
 
-.c {
-  text-align: center;
-}
-
 #box {
   position: relative;
   margin: 0 auto;
@@ -158,25 +154,29 @@ body {
   }
 
   .psb {
+    --gap: 4px;
+    --i-size: 20px;
+    font-size: 14px;
     background: transparent;
     opacity: 1;
-    display: flex;
-    justify-content: space-between;
-    line-height: 14px;
+  }
+
+  .batt {
+    --i-size: 29px;
   }
 
   .psc,
   .pfp {
+    --i-size: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
     opacity: 1;
     color: #000;
   }
 
   .pfp {
-    font-size: 28px;
+    --i-size: 36px;
     line-height: var(--fp-size);
   }
 }
@@ -318,7 +318,6 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    justify-content: space-between;
 
     span {
       min-width: 120px;
@@ -414,6 +413,13 @@ body {
 
 }
 
+#preview,
+.actived {
+  i {
+    font-variation-settings: 'FILL' 1, 'opsz' 20;
+  }
+}
+
 .actived {
   color: var(--main-color);
 }
@@ -432,9 +438,6 @@ body {
 
 .record {
   padding: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .board {
@@ -471,14 +474,19 @@ body {
   font-weight: 500;
 }
 
+.c {
+  text-align: center;
+}
+
+.cc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .r,
 .btn {
   border-radius: var(--r);
-}
-
-.x {
-  line-height: 28px;
-  font-size: 28px;
 }
 
 ._s {
@@ -502,14 +510,13 @@ body {
   --btn-bg: var(--secondary);
   --btn-color: var(--onSecondary);
   display: block;
-  min-height: 200px;
+  min-height: 180px;
   white-space: break-spaces;
-  margin-bottom: 60px;
 }
 
 #tab,
 #notif {
-  --offset: max((var(--bi-radius) - 16px) / 2, 10px);
+  --offset: max((var(--bi-radius) - 16px) / 2, 16px);
   --dr: max(var(--bi-radius) - var(--offset), 14px);
   --h: max(var(--dr) * 2, 48px);
   position: fixed;

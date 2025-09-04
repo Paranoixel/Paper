@@ -188,7 +188,7 @@ function initSaves() {
       return
     }
     parseData(localStorage.getItem(id))
-  }, 1)
+  })
 }
 
 function parseData(s) {
@@ -236,9 +236,10 @@ function _update(key, v, flag = false) {
 function renderRecord(key) {
   const ts = new Date(+key.replace($spf, '')).toLocaleString()
   const c = JSON.parse(localStorage.getItem(key))
+  const n = c[NAME] || 'Untitled'
   const div = $ce('div', {
-    className: 'record',
-    innerHTML: `<p id="${key}">[${c[NAME] || 'Untitled'}] ${ts}</p><p id="del_${key}" class="x c">×</p>`
+    className: 'cc record',
+    innerHTML: `<p id="${key}">[${n}] ${ts}</p><p id="del_${key}"><i class="material-symbols-outlined">delete</i></p>`
   })
   return div
 }
@@ -446,9 +447,11 @@ function addTransformSupport() {
 function _stopSplash() {
   const fn = () => {
     const splash = $('#splash')
+    if (!splash) return
     splash.ontransitionend = () => splash.remove()
     document.body.style.overflow = ''
     splash.style.opacity = 0
   }
+  setTimeout(fn, 1e3)
   document.documentElement.addEventListener('transitionend', fn, { once: true })
 }

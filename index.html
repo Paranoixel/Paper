@@ -5,10 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Papper</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=android_cell_4_bar,battery_android_full,content_copy,content_paste_go,data_table,delete,edit,fingerprint,home,ink_eraser,photo_camera,settings,swap_vert">
   <link rel="stylesheet" href="./color.css">
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./main.js" defer></script>
 </head>
+<!-- <script>
+  const link = document.createElement('link'); link.rel = 'stylesheet'; const href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=';
+  const icons = [
+    'edit', 'settings', 'data_table', 'home', 'content_paste_go', 'content_copy',
+    'ink_eraser', 'delete', 'swap_vert', 'android_cell_4_bar', 'battery_android_full', 'fingerprint',
+    'photo_camera',
+  ];
+  const p = icons.sort().join(','); console.log(p); link.href = href + p; document.head.appendChild(link);
+</script> -->
 
 <style>
   #splash {
@@ -20,6 +31,12 @@
     line-height: 100vh;
     z-index: 40;
     transition: opacity ease-in-out .4s;
+  }
+
+  .material-symbols-outlined {
+    font-size: var(--i-size, 24px) !important;
+    pointer-events: none;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 22
   }
 </style>
 
@@ -41,20 +58,31 @@
         <div class="a r shortcuts other"></div>
       </div>
       <div id="preview" class='a r hide'>
-        <div class="a r psb">
+        <div class="a r cc psb">
           <div>Papeer</div>
-          <div>oO EED</div>
+          <div class="cc gap">
+            <i class="material-symbols-outlined">android_cell_4_bar</i>
+            <i class="batt material-symbols-outlined">battery_android_full</i>
+          </div>
         </div>
         <div class="b c ptime">2002</div>
         <div class="pdata">Mon, Aug 11 ☀ 29℃</div>
-        <div class="a r pfp">❖</div>
-        <div class="a r psc">©</div>
-        <div class="a r psc other">®</div>
+        <div class="a r pfp">
+          <i class="material-symbols-outlined">fingerprint</i>
+        </div>
+        <div class="a r psc">
+          <i class="material-symbols-outlined">home</i>
+        </div>
+        <div class="a r psc other">
+          <i class="material-symbols-outlined">photo_camera</i>
+        </div>
         <div class="a hole r"></div>
       </div>
     </div>
     <div id="console" class="a r">
-      <p id="swapBtn" class="b c end">Swap</p>
+      <p id="swapBtn" class="b c end">
+        <i class="material-symbols-outlined">swap_vert</i>
+      </p>
       <div id="form" class="gap"></div>
     </div>
   </div>
@@ -91,9 +119,15 @@
         <div id="saves" class="end hs"></div>
         <div class="board slide">
           <div class="toolbar a gap">
-            <p id="paste" class="btn _s">Paste</p>
-            <p id="copy" class="btn _s">Copy</p>
-            <p id="clear" class="btn _s">Clear</p>
+            <p id="paste" class="btn _s">
+              <i class="material-symbols-outlined">content_paste_go</i>
+            </p>
+            <p id="copy" class="btn _s">
+              <i class="material-symbols-outlined">content_copy</i>
+            </p>
+            <p id="clear" class="btn _s">
+              <i class="material-symbols-outlined">ink_eraser</i>
+            </p>
           </div>
           <code tabindex="-1" id="codeBox" class="btn" contenteditable spellcheck="false"></code>
         </div>
@@ -105,19 +139,27 @@
         </label>
         <p id="switchMock" class="btn">Mock</p>
         <p id="switchCont" class="btn actived">Layout</p>
-        <p id="zoomBtn" class="btn">Zoom</p>
+        <p id="zoomBtn" class="btn">Auto Zoom</p>
         <p id="testBtn" class="btn">Show Radius</p>
-        <p id="footer" class="btn">Papper ver 1.4.7</p>
+        <p id="footer" class="btn">Papper ver 1.4.8</p>
       </div>
     </div>
   </div>
   <div id="tab">
     <div id="tabList" class="g r fab gap" data-active="action">
-      <p id="action" class="btn actived" data-i="0">Actions</p>
-      <p id="data" class="btn" data-i="1">Data</p>
-      <p id="other" class="btn" data-i="2">Settings</p>
+      <p id="action" class="btn actived" data-i="0">
+        <i class="material-symbols-outlined">home</i>
+      </p>
+      <p id="data" class="btn" data-i="1">
+        <i class="material-symbols-outlined">data_table</i>
+      </p>
+      <p id="other" class="btn" data-i="2">
+        <i class="material-symbols-outlined">settings</i>
+      </p>
     </div>
-    <p id="edit" class="btn fab actived">Edit</p>
+    <p id="edit" class="btn fab actived">
+      <i class="material-symbols-outlined">edit</i>
+    </p>
   </div>
   <div id="notif"></div>
 </body>
