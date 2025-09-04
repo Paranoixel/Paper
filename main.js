@@ -21,13 +21,14 @@ handleClick(list, ({ target: { id } }) => {
   }
 })
 
-handleClick(tabList, ({ target: { id } }) => {
+handleClick(tabList, ({ target }) => {
+  const { id } = target
   if (id === 'tabList') return
   const last = tabList.dataset.active
   if (id === last) return
-  $(`#${last}`)?.classList.remove('actived')
+  last && $(`#${last}`).classList.remove('actived')
   tabList.setAttribute('data-active', id)
-  $(`#${id}`)?.classList.add('actived')
+  $(`#${id}`).classList.add('actived')
   const i = $(`#${id}`).dataset.i
   const pages = $('.pages')
   pages.scrollTo({
@@ -290,7 +291,7 @@ function renderHandler(data, type) {
       function renderBtn(type) {
         const btn = $ce('p', {
           textContent: type,
-          className: 'btn _s c',
+          className: 'btn _s',
           onclick: () => {
             let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(data[key])
             num = +num + (type === '+' ? 1 : -1)
@@ -451,6 +452,7 @@ function _stopSplash() {
     splash.ontransitionend = () => splash.remove()
     document.body.style.overflow = ''
     splash.style.opacity = 0
+    $('#home').click()
   }
   setTimeout(fn, 1e3)
   document.documentElement.addEventListener('transitionend', fn, { once: true })

@@ -337,8 +337,7 @@ body {
 .pack {
   --trans-y: -68px;
   transition: transform ease-in-out 0.3s;
-  padding-top: 8px;
-
+  padding: 8px 0;
 }
 
 .test {
@@ -380,10 +379,22 @@ body {
   .page {
     --btn-bg: var(--secondaryContainer);
     --btn-color: var(--onSecondaryContainer);
-    max-height: 40vh;
     padding: 0 16px;
     flex: 0 0 100%;
-    overflow-y: auto;
+  }
+}
+
+.combine {
+  --gap: 12px;
+  padding: var(--gap);
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border-radius: 16px;
+
+  .btn {
+    --r: 100px;
+    --btn-bg: var(--secondary);
+    --btn-color: var(--onSecondary);
   }
 }
 
@@ -438,6 +449,12 @@ body {
 
 .record {
   padding: 8px;
+
+  p {
+    &:active {
+      color: var(--main-color);
+    }
+  }
 }
 
 .board {
@@ -510,21 +527,22 @@ body {
   --btn-bg: var(--secondary);
   --btn-color: var(--onSecondary);
   display: block;
-  min-height: 180px;
+  min-height: 160px;
   white-space: break-spaces;
 }
 
 #tab,
 #notif {
-  --offset: max((var(--bi-radius) - 16px) / 2, 16px);
+  --offset: max((var(--bi-radius) - 16px) / 2, 12px);
   --dr: max(var(--bi-radius) - var(--offset), 14px);
-  --h: max(var(--dr) * 2, 48px);
+  --h: max(var(--dr) * 2, 64px);
   position: fixed;
   display: flex;
   align-items: center;
 }
 
 #tab {
+  --i-size: calc(var(--h) / 2.5);
   inset: auto var(--offset) var(--offset);
   z-index: 20;
   animation: scroll 1 both linear;
@@ -542,11 +560,7 @@ body {
     background: var(--primaryContainer);
     height: var(--h);
     padding: var(--gap);
-    margin-right: 10px;
-
-    &.g {
-      flex: 18;
-    }
+    flex: 1;
 
     .actived {
       --r: calc(var(--dr) - var(--gap));
@@ -563,8 +577,11 @@ body {
     --r: var(--dr);
     --btn-bg: var(--tertiary);
     --btn-color: var(--onTertiary);
+    --offset: 10px;
     height: var(--h);
-    min-width: var(--h);
+    aspect-ratio: 1;
+    bottom: calc(var(--h) + var(--offset));
+    right: var(--offset);
   }
 }
 
