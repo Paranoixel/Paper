@@ -276,7 +276,6 @@ function renderHandler(data, type) {
         className: 'btn _s',
         style: `--btn-bg: var(${pf}${key})`,
         onclick: async () => {
-          // show dialog
           const t = await paste()
           if (!t) return
           input.value = t
@@ -291,7 +290,7 @@ function renderHandler(data, type) {
       function renderBtn(type) {
         const btn = $ce('p', {
           textContent: type,
-          className: 'btn _s',
+          className: 'btn b _s',
           onclick: () => {
             let { groups: { num, unit } } = /^(?<num>[+-]?\d*\.?\d+)(?<unit>[a-z%]*)$/i.exec(data[key])
             num = +num + (type === '+' ? 1 : -1)

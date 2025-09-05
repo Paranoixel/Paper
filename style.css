@@ -46,7 +46,7 @@ div {
 body {
   font-family: system-ui;
   scroll-timeline: --page block;
-  /* overscroll-behavior-y: contain; */
+  overscroll-behavior-y: contain;
   background: var(--surfaceContainer);
   color: var(--onSurface);
   width: 100vw;
@@ -379,9 +379,6 @@ body {
   overflow-x: auto;
   margin: 0 8px 8px;
   background: var(--secondaryContainer);
-  /* mask-image: linear-gradient(to right, #0001 0, #000 20px, #000 calc(100% - 20px), #0001 100%); */
-  /* mask-repeat: no-repeat; */
-  /* mask-size: 100% 100%; */
 
   .label {
     --btn-h: 100%;
@@ -450,7 +447,6 @@ body {
 }
 
 .actived {
-  font-weight: 500;
   color: var(--main-color);
 
   i {
